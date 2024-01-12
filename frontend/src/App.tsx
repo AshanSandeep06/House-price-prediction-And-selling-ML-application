@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -7,6 +7,10 @@ import Content from "./components/content";
 import Footer from "./components/Footer";
 
 const App = () => {
+  const homeRef = useRef<null>(null);
+  const exploreRef = useRef<null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <div className="App">
       <a href="#" id="scroll_up_btn">
@@ -19,7 +23,9 @@ const App = () => {
         links={["home", "explore", "contact"]}
       />
       <Content />
-      <Footer />
+      <Footer scrollToComponent={function (ref: any): void {
+        throw new Error("Function not implemented.");
+      } } />
     </div>
   );
 };

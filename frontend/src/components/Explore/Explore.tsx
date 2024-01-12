@@ -17,8 +17,9 @@ import { HouseListingDetails } from "../../types/HouseListingDetails";
 import house01 from "../../assets/img/house-01.png";
 import house02 from "../../assets/img/house-03.jpg";
 import house03 from "../../assets/img/house-04.jpg";
+import { ScrollableComponentProps } from "../../types/ScrollableComponentProps";
 
-const Explore = () => {
+const Explore = (props: ScrollableComponentProps) => {
   const [data, setData] = useState<StaticHousePropertyList>({
     houseProperties: [],
   });

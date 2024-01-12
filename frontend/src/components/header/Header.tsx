@@ -11,7 +11,14 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginForm from "../LoginForm/index";
-import { NavLink, BrowserRouter as Router, Route, RouteProps } from 'react-router-dom';
+import {
+  NavLink,
+  BrowserRouter as Router,
+  Route,
+  RouteProps,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import React from "react";
@@ -26,6 +33,7 @@ import MyButton from "../MyButton/index";
 import logo from "../../assets/img/sale-01.png";
 import Dashboard from "../Dashboard";
 import Explore from "../Explore";
+import Footer from "../Footer";
 
 const Header = (props: HeaderProps) => {
   type Anchor = "right";
@@ -33,13 +41,15 @@ const Header = (props: HeaderProps) => {
   const loginFormRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
 
-  const homeRef = useRef(null);
-  const exploreRef = useRef(null);
-  const contactRef = useRef(null);
+  const homeRef = useRef<null>(null);
+  const exploreRef = useRef<null>(null);
+  const contactRef = useRef<null>(null);
 
-  const scrollToComponent = (ref: React.MutableRefObject<null>) => {
-    // ref?.current.scrollIntoView({ behavior: 'smooth' });
-  }
+  const navigate = useNavigate();
+
+  const scrollToComponent = (ref: any) => {
+    ref?.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const [cartState, setCartState] = useState({
     right: false,
@@ -194,12 +204,26 @@ const Header = (props: HeaderProps) => {
               key={index}
               to={"/" + resource}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
-              // onClick={
-              //   resource == "home" ? () => scrollToComponent(homeRef)
-              //   : resource == "explore" ? () => scrollToComponent(exploreRef)
-              //   : resource == "contact" ? () => scrollToComponent(contactRef)
-              //   : () => void
+              // onClick={() =>
+              //   scrollToComponent(
+              //     resource == "home"
+              //       ? homeRef
+              //       : resource == "explore"
+              //       ? exploreRef
+              //       : resource == "contact"
+              //       ? contactRef
+              //       : null
+              //   )
               // }
+              onClick={() =>
+                resource == "home"
+                  ? navigate("/home")
+                  : resource == "explore"
+                  ? navigate("/explore")
+                  : resource == "contact"
+                  ? navigate("/contact")
+                  : null
+              }
             >
               {resource.split("_")[1]
                 ? resource[0].toUpperCase() +
@@ -211,13 +235,13 @@ const Header = (props: HeaderProps) => {
             </NavLink>
           ))}
 
+          {/* <Routes>
+            <Route path="/home" element={<Dashboard />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/contact" element={<Footer />} />
+          </Routes> */}
+
           {/* ========================================= */}
-        {/* <Switch>
-          <Route path="/home" element={<Dashboard  />} />
-          <Route path="/explore" render={() => <Explore ref={exploreRef} />} />
-          <Route path="/contact" render={() => <Contact ref={contactRef} />} />
-        </Switch> */}
-        
         </ul>
 
         <div className="h-full flex items-center justify-center gap-5">
@@ -462,7 +486,10 @@ const Header = (props: HeaderProps) => {
                         {/* Register Form */}
                         <div className="px-5 pt-3 flex flex-col justify-center">
                           <div className="mb-5 grid grid-cols-12 justify-center items-center px-2 py-1">
-                            <h1 id="registerTitle" className="col-span-11 text-center text-[22px] font-medium flex justify-center">
+                            <h1
+                              id="registerTitle"
+                              className="col-span-11 text-center text-[22px] font-medium flex justify-center"
+                            >
                               Customer Register Form
                             </h1>
 

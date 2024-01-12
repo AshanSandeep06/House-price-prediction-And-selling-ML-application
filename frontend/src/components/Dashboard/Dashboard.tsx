@@ -7,11 +7,12 @@ import { StaticHousePropertyList, StaticHouseProperty } from "../../types/Static
 import redbull from "../../assets/img/redbull.png";
 import houseSellingImg from "../../assets/img/house-01.png";
 import HouseListing from "../DashboardDummyImages/DashboardDummyImages";
+import { ScrollableComponentProps } from "../../types/ScrollableComponentProps";
 // import banana from "../../assets/img/banana.png";
 // import strawberries from "../../assets/img/strawberries-01.png";
 // import chicken from "../../assets/img/chicken-01.png";
 
-const Dashboard = () => {
+const Dashboard = (props: ScrollableComponentProps) => {
   const dashboardData: StaticHousePropertyList = {
     houseProperties: [
       {
