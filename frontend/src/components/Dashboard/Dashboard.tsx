@@ -3,16 +3,21 @@ import React from "react";
 // import deliveryPhoto from "../../assets/img/delivery.png";
 import backgroundImage from "../../assets/img/hero-bg.png";
 import DashboardDummyImages from "../DashboardDummyImages";
-import { StaticHousePropertyList, StaticHouseProperty } from "../../types/StaticHouseProperties";
+import {
+  StaticHousePropertyList,
+  StaticHouseProperty,
+} from "../../types/StaticHouseProperties";
 import redbull from "../../assets/img/redbull.png";
 import houseSellingImg from "../../assets/img/house-01.png";
 import HouseListing from "../DashboardDummyImages/DashboardDummyImages";
-import { ScrollableComponentProps } from "../../types/ScrollableComponentProps";
+import { useMyContext } from "../../config/ContextAPI";
 // import banana from "../../assets/img/banana.png";
 // import strawberries from "../../assets/img/strawberries-01.png";
 // import chicken from "../../assets/img/chicken-01.png";
 
-const Dashboard = (props: ScrollableComponentProps) => {
+const Dashboard = () => {
+  const { dashboardRef } = useMyContext();
+
   const dashboardData: StaticHousePropertyList = {
     houseProperties: [
       {
@@ -51,9 +56,14 @@ const Dashboard = (props: ScrollableComponentProps) => {
 
   return (
     <>
-      <div className="py-2 flex-1 flex flex-col items-start justify-center gap-3">
+      <div
+        ref={dashboardRef}
+        className="py-2 flex-1 flex flex-col items-start justify-center gap-3"
+      >
         <div className="flex items-center gap-2 justify-center bg-orange-100 px-4 py-1 rounded-full">
-          <p className="text-base text-orange-500 font-bold">Ever Estate Platform</p>
+          <p className="text-base text-orange-500 font-bold">
+            Ever Estate Platform
+          </p>
           <div className="w-8 h-8 rounded-full overflow-hidden bg-white drop-shadow-xl">
             <img
               src={houseSellingImg}
@@ -70,10 +80,11 @@ const Dashboard = (props: ScrollableComponentProps) => {
           </span>
         </p>
         <p className="text-base text-textColor text-center md:text-left md:w-[80%]">
-        Revolutionize your house-selling experience with our platform.
-        Sellers benefit from precise price predictions through advanced algorithms
-        on our intuitive website. This strategic approach not only attracts buyers 
-        but also ensures sellers optimize profits in the competitive real estate market.
+          Revolutionize your house-selling experience with our platform. Sellers
+          benefit from precise price predictions through advanced algorithms on
+          our intuitive website. This strategic approach not only attracts
+          buyers but also ensures sellers optimize profits in the competitive
+          real estate market.
         </p>
         <motion.button
           whileHover={{ scale: 1.1 }}

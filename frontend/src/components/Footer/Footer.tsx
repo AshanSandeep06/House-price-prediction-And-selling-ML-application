@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 import "./Footer.css";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -9,11 +9,15 @@ import PlaceIcon from "@mui/icons-material/Place";
 import EmailIcon from "@mui/icons-material/Email";
 import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
 import { ScrollableComponentProps } from "../../types/ScrollableComponentProps";
+import { useMyContext } from "../../config/ContextAPI";
 
-const Footer = (props: ScrollableComponentProps) => {
+const Footer = () => {
+  const { footerRef } = useMyContext();
+
   return (
     <footer
       id="footer"
+      ref={footerRef}
       className="bg-[#f7f7f7] !text-[#515151] flex flex-col gap-2"
     >
       <nav className="mb-2">

@@ -1,21 +1,33 @@
-import React, { useRef } from "react";
+import React, { RefObject, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Header from "./components/Header";
 import Content from "./components/content";
 import Footer from "./components/Footer";
+import { NavLink } from "react-router-dom";
+import { useMyContext } from "./config/ContextAPI";
 
 const App = () => {
   const homeRef = useRef<null>(null);
   const exploreRef = useRef<null>(null);
-  const footerRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLElement | null>(null);
+
+  const scrollToComponent = (ref: RefObject<any>) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const { dashboardRef } = useMyContext();
 
   return (
     <div className="App">
-      <a href="#" id="scroll_up_btn">
+      <NavLink
+        to={"/home"}
+        id="scroll_up_btn"
+        onClick={() => scrollToComponent(dashboardRef)}
+      >
         <ArrowUpwardIcon />
-      </a>
+      </NavLink>
 
       {/* ========== Home Page ========== */}
       <Header
@@ -23,9 +35,7 @@ const App = () => {
         links={["home", "explore", "contact"]}
       />
       <Content />
-      <Footer scrollToComponent={function (ref: any): void {
-        throw new Error("Function not implemented.");
-      } } />
+      <Footer />
     </div>
   );
 };

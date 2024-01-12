@@ -1,4 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  MutableRefObject,
+  RefObject,
+} from "react";
 import HeaderProps from "../../types/HeaderProps";
 import "./Header.css";
 import {
@@ -34,6 +40,7 @@ import logo from "../../assets/img/sale-01.png";
 import Dashboard from "../Dashboard";
 import Explore from "../Explore";
 import Footer from "../Footer";
+import { useMyContext } from "../../config/ContextAPI";
 
 const Header = (props: HeaderProps) => {
   type Anchor = "right";
@@ -41,15 +48,17 @@ const Header = (props: HeaderProps) => {
   const loginFormRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
 
-  const homeRef = useRef<null>(null);
-  const exploreRef = useRef<null>(null);
-  const contactRef = useRef<null>(null);
+  const { dashboardRef, exploreRef, footerRef } = useMyContext();
 
-  const navigate = useNavigate();
-
-  const scrollToComponent = (ref: any) => {
-    ref?.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToComponent = (ref: RefObject<any>) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    console.log("dashboardRef current value:", dashboardRef.current);
+    console.log("exploreRef current value:", exploreRef.current);
+    console.log("footerRef current value:", footerRef.current);
+  }, [dashboardRef, exploreRef, footerRef]);
 
   const [cartState, setCartState] = useState({
     right: false,
@@ -184,7 +193,7 @@ const Header = (props: HeaderProps) => {
     <header className="flex w-full h-20 !text-[rgb(81,81,81)] z-10 fixed top-0">
       <div className="w-1/4 h-full flex items-center gap-2.5 pl-[38px]">
         <img src={logo} alt="UserImage" className="w-10 h-10" />
-        <NavLink to={"/home"} onClick={() => scrollToComponent(homeRef)}>
+        <NavLink to={"/home"} onClick={() => scrollToComponent(dashboardRef)}>
           <h1
             style={{ letterSpacing: "2px", marginTop: "2px" }}
             className="h-max mb-[1px] !text-2xl !text-black"
@@ -204,25 +213,14 @@ const Header = (props: HeaderProps) => {
               key={index}
               to={"/" + resource}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
-              // onClick={() =>
-              //   scrollToComponent(
-              //     resource == "home"
-              //       ? homeRef
-              //       : resource == "explore"
-              //       ? exploreRef
-              //       : resource == "contact"
-              //       ? contactRef
-              //       : null
-              //   )
-              // }
               onClick={() =>
-                resource == "home"
-                  ? navigate("/home")
-                  : resource == "explore"
-                  ? navigate("/explore")
-                  : resource == "contact"
-                  ? navigate("/contact")
-                  : null
+                scrollToComponent(
+                  resource == "home"
+                    ? dashboardRef
+                    : resource == "explore"
+                    ? exploreRef
+                    : footerRef
+                )
               }
             >
               {resource.split("_")[1]

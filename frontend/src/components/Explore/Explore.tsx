@@ -17,9 +17,11 @@ import { HouseListingDetails } from "../../types/HouseListingDetails";
 import house01 from "../../assets/img/house-01.png";
 import house02 from "../../assets/img/house-03.jpg";
 import house03 from "../../assets/img/house-04.jpg";
-import { ScrollableComponentProps } from "../../types/ScrollableComponentProps";
+import { useMyContext } from "../../config/ContextAPI";
 
-const Explore = (props: ScrollableComponentProps) => {
+const Explore = () => {
+  const { exploreRef } = useMyContext();
+
   const [data, setData] = useState<StaticHousePropertyList>({
     houseProperties: [],
   });
@@ -164,7 +166,7 @@ const Explore = (props: ScrollableComponentProps) => {
   // };
 
   return (
-    <section className="w-full flex items-center flex-col px-4 pt-4">
+    <section ref={exploreRef} className="w-full flex items-center flex-col px-4 pt-4">
       <div className="mb-2">
         <h1 className="relative pb-[8px]" id="foodMenuHeading">
           Experience About Best Houses
