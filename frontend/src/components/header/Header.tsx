@@ -11,7 +11,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginForm from "../LoginForm/index";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, BrowserRouter as Router, Route, RouteProps } from 'react-router-dom';
 import { styled } from "@mui/material/styles";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import React from "react";
@@ -24,12 +24,22 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Form from "../Form/index";
 import MyButton from "../MyButton/index";
 import logo from "../../assets/img/sale-01.png";
+import Dashboard from "../Dashboard";
+import Explore from "../Explore";
 
 const Header = (props: HeaderProps) => {
   type Anchor = "right";
 
   const loginFormRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
+
+  const homeRef = useRef(null);
+  const exploreRef = useRef(null);
+  const contactRef = useRef(null);
+
+  const scrollToComponent = (ref: React.MutableRefObject<null>) => {
+    // ref?.current.scrollIntoView({ behavior: 'smooth' });
+  }
 
   const [cartState, setCartState] = useState({
     right: false,
@@ -164,7 +174,7 @@ const Header = (props: HeaderProps) => {
     <header className="flex w-full h-20 !text-[rgb(81,81,81)] z-10 fixed top-0">
       <div className="w-1/4 h-full flex items-center gap-2.5 pl-[38px]">
         <img src={logo} alt="UserImage" className="w-10 h-10" />
-        <NavLink to={"/home"}>
+        <NavLink to={"/home"} onClick={() => scrollToComponent(homeRef)}>
           <h1
             style={{ letterSpacing: "2px", marginTop: "2px" }}
             className="h-max mb-[1px] !text-2xl !text-black"
@@ -184,6 +194,12 @@ const Header = (props: HeaderProps) => {
               key={index}
               to={"/" + resource}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
+              // onClick={
+              //   resource == "home" ? () => scrollToComponent(homeRef)
+              //   : resource == "explore" ? () => scrollToComponent(exploreRef)
+              //   : resource == "contact" ? () => scrollToComponent(contactRef)
+              //   : () => void
+              // }
             >
               {resource.split("_")[1]
                 ? resource[0].toUpperCase() +
@@ -194,6 +210,14 @@ const Header = (props: HeaderProps) => {
                 : resource[0].toUpperCase() + resource.substring(1)}
             </NavLink>
           ))}
+
+          {/* ========================================= */}
+        {/* <Switch>
+          <Route path="/home" element={<Dashboard  />} />
+          <Route path="/explore" render={() => <Explore ref={exploreRef} />} />
+          <Route path="/contact" render={() => <Contact ref={contactRef} />} />
+        </Switch> */}
+        
         </ul>
 
         <div className="h-full flex items-center justify-center gap-5">
@@ -438,7 +462,7 @@ const Header = (props: HeaderProps) => {
                         {/* Register Form */}
                         <div className="px-5 pt-3 flex flex-col justify-center">
                           <div className="mb-5 grid grid-cols-12 justify-center items-center px-2 py-1">
-                            <h1 className="col-span-11 text-center text-[22px] font-medium flex justify-center">
+                            <h1 id="registerTitle" className="col-span-11 text-center text-[22px] font-medium flex justify-center">
                               Customer Register Form
                             </h1>
 

@@ -2,7 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import Header from "./components/header";
+import Header from "./components/Header";
 import Content from "./components/content";
 import Footer from "./components/Footer";
 
