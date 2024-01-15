@@ -8,7 +8,6 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PlaceIcon from "@mui/icons-material/Place";
 import EmailIcon from "@mui/icons-material/Email";
 import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
-import { ScrollableComponentProps } from "../../types/ScrollableComponentProps";
 import { useMyContext } from "../../config/ContextAPI";
 
 const Footer = () => {
