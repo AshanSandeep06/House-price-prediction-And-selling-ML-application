@@ -175,7 +175,7 @@ const Explore = () => {
 
       <div
         style={{ columnGap: "18px" }}
-        className="flex justify-center flex-wrap px-5 w-full mt-3 bg-[#F5EEE9] pb-[8px]"
+        className="flex justify-center flex-wrap px-5 w-full mt-3 bg-[#F5EEE9] pb-[15px]"
       >
         {/* <Food items={data.items} /> */}
         {houseDummyData.map((house, index) => (

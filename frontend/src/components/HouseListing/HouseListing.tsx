@@ -8,16 +8,19 @@ import {
   Typography,
   Divider,
   Paper,
+  Button,
 } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import KingBedIcon from "@mui/icons-material/KingBed";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const HouseListing = (props: HouseListingDetails) => {
   return (
     <Paper
       elevation={3}
+      className="!mb-[10px] card"
       sx={{
         maxWidth: 300,
         margin: 2,
@@ -30,6 +33,7 @@ const HouseListing = (props: HouseListingDetails) => {
         <CardMedia
           component="img"
           height={200}
+          className="img"
           image={props.imageUrl}
           alt={props.name}
         />
@@ -37,32 +41,61 @@ const HouseListing = (props: HouseListingDetails) => {
           <Typography variant="h6" component="div" gutterBottom>
             {props.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" paragraph>
-            {props.address}
-          </Typography>
+
+          <p className="!mb-[16px]">
+            <LocationOnIcon
+              className="!text-[#2563EB]"
+              sx={{ marginRight: 0.8 }}
+            />
+            <Typography
+              className="inline"
+              variant="body2"
+              color="textSecondary"
+              paragraph
+            >
+              {props.address}
+            </Typography>
+          </p>
+
           <Typography
             sx={{ color: "primary.main", fontSize: "1.25rem", marginBottom: 1 }}
           >
             <AttachMoneyIcon sx={{ marginRight: 0.5 }} />
             {props.price}
           </Typography>
-          <Divider />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              fontSize: "0.875rem",
-              color: "text.secondary",
-            }}
-          >
-            <KingBedIcon sx={{ marginRight: 0.8 }} />
-            <div style={{ textAlign: "center" }}>{props.bedrooms} Beds</div>
-            <BathtubIcon sx={{ marginLeft: 3.5, marginRight: 0.8 }} />
-            <div style={{ textAlign: "center" }}>{props.bathrooms} Baths</div>
-            <SquareFootIcon sx={{ marginLeft: 3.5 }} />
-            <div style={{ textAlign: "center" }}>{props.area} sq ft</div>
-          </div>
+          <Divider className="!mb-[5px]" />
+          <CardContent className="!p-0">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "0.875rem",
+                color: "text.secondary",
+                // backgroundColor: "#EEEEEE",
+                marginTop: 10,
+              }}
+            >
+              <KingBedIcon sx={{ marginRight: 0.8, color: "primary.main" }} />
+              <div style={{ textAlign: "center" }}>{props.bedrooms} Beds</div>
+              <BathtubIcon
+                sx={{
+                  marginLeft: 3.5,
+                  marginRight: 0.8,
+                  color: "primary.main",
+                }}
+              />
+              <div style={{ textAlign: "center" }}>{props.bathrooms} Baths</div>
+              <SquareFootIcon sx={{ marginLeft: 3.5, color: "primary.main" }} />
+              <div style={{ textAlign: "center" }}>{props.area} sq ft</div>
+            </div>
+          </CardContent>
         </CardContent>
+
+        <div className="flex justify-center mb-6 mt-2">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded !mt-0">
+            View Property
+          </button>
+        </div>
       </Card>
     </Paper>
   );

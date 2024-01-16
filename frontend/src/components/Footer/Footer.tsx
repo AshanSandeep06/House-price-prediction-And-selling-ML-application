@@ -17,7 +17,7 @@ const Footer = () => {
     <footer
       id="footer"
       ref={footerRef}
-      className="bg-[#f7f7f7] !text-[#515151] flex flex-col gap-2"
+      className="bg-[#fdfcfc] !text-[#515151] flex flex-col gap-2"
     >
       <nav className="mb-2">
         <menu className="flex justify-center text-center gap-16 px-6 flex-wrap">
