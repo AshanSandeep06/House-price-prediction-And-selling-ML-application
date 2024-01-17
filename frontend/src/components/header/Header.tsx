@@ -211,7 +211,7 @@ const Header = (props: HeaderProps) => {
           {props.links.map((resource, index) => (
             <NavLink
               key={index}
-              to={"/" + resource}
+              to={"/user/" + resource}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
               onClick={() =>
                 scrollToComponent(
@@ -223,12 +223,22 @@ const Header = (props: HeaderProps) => {
                 )
               }
             >
-              {resource.split("_")[1]
+              {resource.split("_")[2]
                 ? resource[0].toUpperCase() +
                   resource.split("_")[0].substring(1) +
                   " " +
                   resource.split("_")[1][0].toUpperCase() +
+                  resource.split("_")[1].substring(1) + " " +
+                  resource.split("_")[2][0].toUpperCase() +
+                  resource.split("_")[2].substring(1)
+
+                  : resource.split("_")[1] ? resource[0].toUpperCase() +
+                  resource.split("_")[0].substring(1) +
+                  " " +
+                  resource.split("_")[1][0].toUpperCase() +
                   resource.split("_")[1].substring(1)
+
+
                 : resource[0].toUpperCase() + resource.substring(1)}
             </NavLink>
           ))}
