@@ -1,12 +1,25 @@
-import { RefObject, createContext, useContext, useRef } from "react";
+import {
+  Dispatch,
+  RefObject,
+  createContext,
+  useContext,
+  useRef,
+  useState,
+} from "react";
+import HomePage from "../../components/Home";
+import UserPage from "../../pages/SellerPages/UserPage";
+import { useNavigate } from "react-router-dom";
 
-interface AllRefs {
+interface AllObjects {
   dashboardRef: RefObject<any>;
   exploreRef: RefObject<any>;
   footerRef: RefObject<any>;
+  // currentComponent: React.ReactNode;
+  // setCurrentComponent: Dispatch<any>;
+  // handleBtnLoginClick: () => void;
 }
 
-const MyContext = createContext<AllRefs | undefined | null>(null);
+const MyContext = createContext<AllObjects | undefined | null>(null);
 
 // Create a custom hook for accessing the context value
 const useMyContext = () => {
@@ -23,14 +36,36 @@ interface MyContextProviderProps {
 }
 
 const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
+  const navigate = useNavigate();
+  
   const homeRef = useRef<any>(null);
   const exploreRef = useRef<any>(null);
   const contactRef = useRef<any>(null);
+  const [currentComponent, setCurrentComponent] = useState<any>(null);
 
-  const allRefs: AllRefs = {
+  const handleBtnLoginClick = () => {
+    switch (currentComponent) {
+      case null:
+        setCurrentComponent(<HomePage />);
+        break;
+
+      case (<HomePage />):
+        setCurrentComponent(<UserPage />);
+        break;
+
+      default:
+        setCurrentComponent(null);
+        break;
+    }
+  };
+
+  const allRefs: AllObjects = {
     dashboardRef: homeRef,
     exploreRef: exploreRef,
     footerRef: contactRef,
+    // currentComponent: currentComponent,
+    // setCurrentComponent: setCurrentComponent,
+    // handleBtnLoginClick: handleBtnLoginClick,
   };
 
   return <MyContext.Provider value={allRefs}>{children}</MyContext.Provider>;

@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import LoginFormProps from "../../types/LoginFormProps";
 import { Button, TextField } from "@mui/material";
 import "./LoginForm.css";
+import { useMyContext } from "../../config/ContextAPI";
 
 const LoginForm = (props: LoginFormProps) => {
   const loginFormRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,10 @@ const LoginForm = (props: LoginFormProps) => {
       props.closeLoginForm("right", false);
     }
   };
+
+  // const userAuth = () => {
+  //   console.log("sdsdsd");
+  // };
 
   return (
     <>
@@ -102,8 +107,9 @@ const LoginForm = (props: LoginFormProps) => {
           <Button
             className="!px-[30px] !capitalize !font-poppins !font-normal !text-[16px] !bg-[#0d6efd]"
             variant="contained"
+            // onClick={handleBtnLoginClick}
           >
-            Login
+            Loginsss
           </Button>
         </div>
 

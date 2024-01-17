@@ -1,23 +1,26 @@
-import React, { RefObject, useRef } from "react";
+import React, { RefObject, useEffect, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Header from "./components/Header";
 import Content from "./components/content";
 import Footer from "./components/Footer";
-import { NavLink } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
 import { useMyContext } from "./config/ContextAPI";
+import Home from "./components/Home";
+import HomePage from "./components/Home/HomePage";
+import UserPage from "./pages/SellerPages/UserPage";
 
 const App = () => {
-  const homeRef = useRef<null>(null);
-  const exploreRef = useRef<null>(null);
-  const footerRef = useRef<HTMLElement | null>(null);
-
   const scrollToComponent = (ref: RefObject<any>) => {
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const { dashboardRef } = useMyContext();
+
+  // useEffect(() => {
+  //   handleBtnLoginClick();
+  // }, [setCurrentComponent]);
 
   return (
     <div className="App">
@@ -30,12 +33,15 @@ const App = () => {
       </NavLink>
 
       {/* ========== Home Page ========== */}
-      <Header
-        buttons={["login", "sign up", "POST YOUR AD"]}
-        links={["home", "explore", "contact"]}
-      />
-      <Content />
-      <Footer />
+      {/* ========== User Page ========== */}
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/explore" element={<HomePage />} />
+        <Route path="/contact" element={<HomePage />} />
+        <Route path="/user/login" element={<UserPage />} />
+      </Routes>
     </div>
   );
 };

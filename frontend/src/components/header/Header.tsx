@@ -350,12 +350,22 @@ const Header = (props: HeaderProps) => {
                         </div>
 
                         <div className="my-5 flex justify-center items-center">
-                          <Button
-                            className="!px-[30px] !capitalize !font-poppins !font-normal !text-[16px] !bg-[#0d6efd]"
-                            variant="contained"
+                          <NavLink
+                            id="loginContainer"
+                            to={"/user/login"}
+                            style={{
+                              height: "max-content",
+                              borderRadius: "6px",
+                            }}
                           >
-                            Login
-                          </Button>
+                            <Button
+                              className="!px-[30px] !capitalize !font-poppins !font-normal !text-[16px] !bg-[#0d6efd]"
+                              variant="contained"
+                              // onClick={handleBtnLoginClick}
+                            >
+                              Login
+                            </Button>
+                          </NavLink>
                         </div>
 
                         <div className="flex justify-center items-center flex-wrap">
