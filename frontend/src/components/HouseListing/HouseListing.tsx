@@ -58,7 +58,8 @@ const HouseListing = (props: HouseListingDetails) => {
           </p>
 
           <Typography
-            sx={{ color: "primary.main", fontSize: "1.25rem", marginBottom: 1 }}
+            className="!text-green-500 !font-bold !text-lg"
+            sx={{ fontSize: "1.25rem", marginBottom: 1 }}
           >
             <AttachMoneyIcon sx={{ marginRight: 0.5 }} />
             {props.price}
@@ -75,17 +76,17 @@ const HouseListing = (props: HouseListingDetails) => {
                 marginTop: 10,
               }}
             >
-              <KingBedIcon sx={{ marginRight: 0.8, color: "primary.main" }} />
+              <KingBedIcon sx={{ marginRight: 0.8, color: "#2563EB" }} />
               <div style={{ textAlign: "center" }}>{props.bedrooms} Beds</div>
               <BathtubIcon
                 sx={{
                   marginLeft: 3.5,
                   marginRight: 0.8,
-                  color: "primary.main",
+                  color: "#2563EB",
                 }}
               />
               <div style={{ textAlign: "center" }}>{props.bathrooms} Baths</div>
-              <SquareFootIcon sx={{ marginLeft: 3.5, color: "primary.main" }} />
+              <SquareFootIcon sx={{ marginLeft: 3.5, color: "#2563EB" }} />
               <div style={{ textAlign: "center" }}>{props.area} sq ft</div>
             </div>
           </CardContent>
