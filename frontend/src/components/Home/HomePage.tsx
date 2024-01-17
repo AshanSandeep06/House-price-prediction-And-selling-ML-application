@@ -8,8 +8,7 @@ const HomePage = () => {
     <>
       <Header
         buttons={["login", "sign up", "POST YOUR AD"]}
-        links={["home", "explore", "contact"]}
-      />
+        links={["home", "explore", "contact"]} prefix="/" />
       <Content />
       <Footer />
     </>

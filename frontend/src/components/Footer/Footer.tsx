@@ -17,7 +17,11 @@ const Footer = () => {
     <footer
       id="footer"
       ref={footerRef}
-      className="bg-[#fdfcfc] !text-[#515151] flex flex-col gap-2"
+      className="!text-[#515151] flex flex-col gap-2"
+      style={{
+        boxShadow: "0 0 1rem 0 rgba(0, 0, 0, 0.075)",
+        backgroundColor: "rgba(255, 255, 255, 0.15)",
+      }}
     >
       <nav className="mb-2">
         <menu className="flex justify-center text-center gap-16 px-6 flex-wrap">

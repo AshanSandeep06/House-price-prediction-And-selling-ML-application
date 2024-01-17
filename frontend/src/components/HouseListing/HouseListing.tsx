@@ -15,6 +15,7 @@ import KingBedIcon from "@mui/icons-material/KingBed";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { NavLink } from "react-router-dom";
 
 const HouseListing = (props: HouseListingDetails) => {
   return (
@@ -93,9 +94,11 @@ const HouseListing = (props: HouseListingDetails) => {
         </CardContent>
 
         <div className="flex justify-center mb-6 mt-2">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded !mt-0">
-            View Property
-          </button>
+          <NavLink to={"/user/myListings/viewProperty"}>
+            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded !mt-0">
+              View Property
+            </button>
+          </NavLink>
         </div>
       </Card>
     </Paper>

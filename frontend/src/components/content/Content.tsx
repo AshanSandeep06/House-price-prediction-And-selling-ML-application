@@ -13,7 +13,7 @@ const Content = () => {
 
       {/* ------------ House property Listings ------------ */}
       <main className="gap-2 w-full pt-6 px-10 bg-[#FAFAFF]">
-        <Explore />
+        <Explore title={"Experience About Best Houses"} width="235px" />
       </main>
     </>
   );

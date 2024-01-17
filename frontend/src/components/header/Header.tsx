@@ -211,7 +211,7 @@ const Header = (props: HeaderProps) => {
           {props.links.map((resource, index) => (
             <NavLink
               key={index}
-              to={"/user/" + resource}
+              to={props.prefix + resource}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
               onClick={() =>
                 scrollToComponent(
@@ -582,14 +582,16 @@ const Header = (props: HeaderProps) => {
             ) : buttonText == "my_profile" ? (
               <MyButton
                 key={index}
-                resource={buttonText}
+                text={buttonText}
+                resource={"/user/"+buttonText}
                 icon={<AccountCircleIcon className="!text-[20px]" />}
                 styles={style2}
               />
             ) : buttonText == "logout" ? (
               <MyButton
                 key={index}
-                resource={buttonText}
+                resource={"/user/"+buttonText}
+                text={buttonText}
                 icon={<LogoutIcon className="!text-[20px]" />}
                 styles={style1}
               />
