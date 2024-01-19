@@ -18,7 +18,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
 
     {
@@ -28,7 +28,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -38,7 +38,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
 
     {
@@ -48,7 +48,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -58,7 +58,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -68,7 +68,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
 
     {
@@ -78,7 +78,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -88,7 +88,7 @@ const MyListings = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
   ];
 

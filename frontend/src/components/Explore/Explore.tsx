@@ -34,7 +34,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
 
     {
@@ -44,7 +44,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -54,7 +54,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
 
     {
@@ -64,7 +64,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -74,7 +74,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -84,7 +84,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
 
     {
@@ -94,7 +94,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house03,
+      mainImageUrl: house03,
     },
 
     {
@@ -104,7 +104,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: "4200",
-      imageUrl: house02,
+      mainImageUrl: house02,
     },
   ];
 

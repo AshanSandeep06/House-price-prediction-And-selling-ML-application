@@ -35,7 +35,7 @@ const HouseListing = (props: HouseListingDetails) => {
           component="img"
           height={200}
           className="img"
-          image={props.imageUrl}
+          image={props.mainImageUrl}
           alt={props.name}
         />
         <CardContent>

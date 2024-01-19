@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -16,7 +16,21 @@ import SellerProfile from "./pages/SellerPages/SellerProfile";
 import MyListings from "./pages/SellerPages/MyListings";
 import ViewPropertyDetails from "./components/ViewPropertyDetails";
 
+import houseImage1 from "./assets/img/house-02.jpg";
+import houseImage2 from "./assets/img/house-03.jpg";
+import houseImage3 from "./assets/img/house-04.jpg";
+
 const App = () => {
+  const [openGallery, setOpenGallery] = useState<boolean>(true);
+
+  const handleGalleryOpen = () => {
+    setOpenGallery(true);
+  };
+
+  const handleGalleryClose = () => {
+    setOpenGallery(false);
+  };
+
   const scrollToComponent = (ref: RefObject<any>) => {
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -51,7 +65,29 @@ const App = () => {
         <Route path="/user/predict_house_price" element={<PricePrediction />} />
         <Route path="/user/sell_your_house" element={<SellHouse />} />
         <Route path="/user/my_profile" element={<SellerProfile />} />
-        <Route path="/user/myListings/viewProperty" element={<ViewPropertyDetails />} />
+        <Route
+          path="/user/myListings/viewProperty"
+          element={
+            <ViewPropertyDetails
+              images={[
+                { url: houseImage1 },
+                { url: houseImage2 },
+                { url: houseImage3 },
+                { url: houseImage2 },
+              ]}
+              name={"Beautiful House"}
+              description={
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, unde delectus aspernatur veniam architecto ex labore itaque quo quod hic officiis eum laboriosam deleniti accusamus error quas modi, sequi illo."
+              }
+              address={"123 Main Street"}
+              price={50000}
+              bedrooms={3}
+              bathrooms={5}
+              area={"4200 sqft"}
+              mainImageUrl={houseImage2}
+            />
+          }
+        />
       </Routes>
     </div>
   );

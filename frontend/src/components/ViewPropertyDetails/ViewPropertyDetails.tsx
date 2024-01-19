@@ -1,312 +1,89 @@
-import React from "react";
+// PropertyDetails.tsx
+
+import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-  Container,
-  Grid,
-  Paper,
-  Box,
   Card,
   CardContent,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
+  Typography,
+  Grid,
+  IconButton,
+  Button,
 } from "@mui/material";
-import {
-  Menu as MenuIcon,
-  House as HouseIcon,
-  LocationOn as LocationOnIcon,
-  AttachMoney as AttachMoneyIcon,
-  Person as PersonIcon,
-  Phone as PhoneIcon,
-  Category as CategoryIcon,
-  CategoryOutlined as CategoryOutlinedIcon,
-  Event as EventIcon,
-  Check as CheckIcon,
-  Clear as ClearIcon,
-} from "@mui/icons-material";
+import { Bed, Bathtub, Straighten, Close } from "@mui/icons-material";
+import PropertyGallery from "../PropertyGallery";
 
-const ViewPropertyDetails = () => {
+import "./ViewPropertyDetails.css";
+import { HouseListingDetails } from "../../types/HouseListingDetails";
+
+interface PropertyDetailsProps {
+  property: {
+    title: string;
+    bedrooms: number;
+    bathrooms: number;
+    area: number;
+    description: string;
+    images: { url: string }[] | any;
+  };
+}
+
+const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
+  const { images, bedrooms, bathrooms, area, description, name, mainImageUrl } =
+    property;
+  const [openGallery, setOpenGallery] = useState(false);
+
+  const handleGalleryOpen = () => {
+    setOpenGallery(true);
+  };
+
+  const handleGalleryClose = () => {
+    setOpenGallery(false);
+  };
+
   return (
-    <div>
-      {/* View Property Section */}
-      <Container>
-        <Paper>
-          <Box p={2}>
-            {/* Property Details */}
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                {/* Property Images */}
-                <Box mb={2}>
-                  <img
-                    src="images/house-img-1.webp"
-                    alt=""
-                    style={{ width: "100%" }}
-                  />
-                </Box>
-                <Box display="flex">
-                  <img
-                    src="images/house-img-1.webp"
-                    alt=""
-                    style={{ width: "25%" }}
-                  />
-                  <img
-                    src="images/hall-img-1.webp"
-                    alt=""
-                    style={{ width: "25%" }}
-                  />
-                  <img
-                    src="images/kitchen-img-1.webp"
-                    alt=""
-                    style={{ width: "25%" }}
-                  />
-                  <img
-                    src="images/bathroom-img-1.webp"
-                    alt=""
-                    style={{ width: "25%" }}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {/* Property Info */}
-                <Typography variant="h5" gutterBottom>
-                  Modern Flats and Apartments
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  <LocationOnIcon /> Andheri, Mumbai, India - 400104
-                </Typography>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <AttachMoneyIcon />
-                  <Typography variant="body1">15 Lac</Typography>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <PersonIcon />
-                  <Typography variant="body1">John Deo (Owner)</Typography>
-                </Box>
-                <Typography variant="body1">
-                  <PhoneIcon /> <a href="tel:1234567890">1234567890</a>
-                </Typography>
-                <Typography variant="body1">
-                  <CategoryIcon /> Flat
-                </Typography>
-                <Typography variant="body1">
-                  <CategoryOutlinedIcon /> Sale
-                </Typography>
-                <Typography variant="body1">
-                  <EventIcon /> 10-11-2022
-                </Typography>
-              </Grid>
-            </Grid>
+    <Card className="property-details-card">
+      <CardContent>
+        <Typography variant="h5" component="div" className="property-title">
+          {name}
+        </Typography>
 
-            {/* Property Details - Rooms, Amenities, Description */}
-            <Grid container spacing={2}>
-              {/* Rooms */}
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6" gutterBottom>
-                  Details
-                </Typography>
-                <List>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Rooms: 2 BHK" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <AttachMoneyIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Deposit Amount: 0" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Status: Ready to Move" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Bedroom: 3" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Bathroom: 2" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Balcony: 1" />
-                  </ListItem>
-                </List>
-              </Grid>
+        <Typography variant="subtitle1" gutterBottom className="property-specs">
+          <Bed /> {bedrooms} Bedrooms | <Bathtub /> {bathrooms} Bathrooms |{" "}
+          <Straighten /> {area} sq. ft.
+        </Typography>
 
-              {/* Additional Details */}
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6" gutterBottom>
-                  Additional Details
-                </Typography>
-                <List>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Carpet Area: 750sqft" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <EventIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Age: 3 Years" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Room Floor: 3" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Total Floors: 22" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Furnished: Semi-Furnished" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CategoryIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Loan: Available" />
-                  </ListItem>
-                </List>
-              </Grid>
-            </Grid>
+        <Typography variant="body1" paragraph className="property-description">
+          {description}
+        </Typography>
 
-            {/* Amenities */}
-            <Typography variant="h6" gutterBottom>
-              Amenities
-            </Typography>
-            <Grid container spacing={2}>
-              {/* Amenities - Left */}
-              <Grid item xs={12} sm={6}>
-                <List>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Lifts" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Security Guards" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <ClearIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Play Ground" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Gardens" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Water Supply" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Power Backup" />
-                  </ListItem>
-                </List>
-              </Grid>
-
-              {/* Amenities - Right */}
-              <Grid item xs={12} sm={6}>
-                <List>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Parking Area" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <ClearIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Gym" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Shopping Mall" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Hospital" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Schools" />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CheckIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Market Area" />
-                  </ListItem>
-                </List>
-              </Grid>
-            </Grid>
-
-            {/* Description */}
-            <Typography variant="h6" gutterBottom>
-              Description
-            </Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatum cupiditate aliquid ipsum recusandae maxime nisi, velit
-              eaque, libero, exercitationem culpa accusamus. Neque dolor quaerat
-              modi saepe facere dignissimos temporibus molestias.
-            </Typography>
-
-            {/* Save Property Button */}
-            <form action="" method="post">
-              <Button variant="contained" color="primary" type="submit">
-                Save Property
-              </Button>
-            </form>
-          </Box>
-        </Paper>
-      </Container>
-    </div>
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          spacing={2}
+        >
+          <Grid item xs={12} justifyContent={"center"} alignItems={"center"}>
+            <div className="property-image" onClick={handleGalleryOpen}>
+              {/* Display the first image as a preview */}
+              <img
+                src={mainImageUrl}
+                alt={`${name} Preview`}
+                className="preview-image"
+              />
+            </div>
+          </Grid>
+        </Grid>
+        <PropertyGallery
+          images={images}
+          open={openGallery}
+          handleClose={handleGalleryClose}
+        />
+        <div className="actions">
+          <Button variant="contained" color="primary">
+            Contact Agent
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
