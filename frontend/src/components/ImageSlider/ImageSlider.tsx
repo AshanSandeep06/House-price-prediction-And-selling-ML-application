@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 import houseImage1 from "../../assets/img/house-02.jpg";
@@ -6,10 +6,13 @@ import houseImage2 from "../../assets/img/house-03.jpg";
 import houseImage3 from "../../assets/img/house-04.jpg";
 import { Button } from "@mui/material";
 
-const images = [houseImage1, houseImage3, houseImage2, houseImage1];
+import "./ImageSlider.css";
+
+const dummyImages = [houseImage1, houseImage3, houseImage2, houseImage1];
 
 const ImageSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [images, setImages] = useState(dummyImages);
 
   const handlePrev = () => {
     setActiveIndex((prevIndex) =>
@@ -22,6 +25,22 @@ const ImageSlider = () => {
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagePromises = images.map((imageSrc) => {
+        const image = new Image();
+        image.src = imageSrc;
+        return new Promise((resolve) => {
+          image.onload = resolve;
+        });
+      });
+
+      await Promise.all(imagePromises);
+    };
+
+    preloadImages();
+  }, [images]);
 
   return (
     <div>
@@ -38,7 +57,7 @@ const ImageSlider = () => {
               key={index}
               src={image}
               alt={`Thumbnail ${index + 1}`}
-              className={`h-14 w-14 rounded-md object-cover cursor-pointer ${
+              className={`h-[4rem] w-[4rem] images rounded-md object-cover cursor-pointer ${
                 index === activeIndex ? "border-2 border-blue-500" : ""
               }`}
               onClick={() => setActiveIndex(index)}
