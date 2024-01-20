@@ -16,6 +16,7 @@ import "./ViewPropertyDetails.css";
 import { HouseListingDetails } from "../../types/HouseListingDetails";
 import ImageSlider from "../ImageSlider";
 import GoogleMapsApi from "../GoogleMapsApi";
+import ReactLeafletMap from "../ReactLeafletMap";
 
 interface PropertyDetailsProps {
   property: {
@@ -89,8 +90,10 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
             </div>
 
             <div className="mt-6">
-              {/* Google Maps Embed API */}
-              <GoogleMapsApi />
+              {/*-------------- Google Maps Embed API --------------*/}
+              {/* <GoogleMapsApi /> */}
+
+              {/*-------------- React-Leaflet Map --------------*/}
             </div>
           </Grid>
         </Grid>
@@ -105,6 +108,8 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
           </Button>
         </div>
       </CardContent>
+
+      <ReactLeafletMap />
     </Card>
   );
 };

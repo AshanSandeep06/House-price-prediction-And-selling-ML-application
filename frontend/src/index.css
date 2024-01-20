@@ -17,7 +17,7 @@
   }
 
   * {
-    font-family: "Poppins", sans-serif!important;
+    font-family: "Poppins", sans-serif !important;
   }
 
   * {
@@ -65,5 +65,10 @@
   .scrollbar-hidden {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .leaflet-container {
+    height: 600px;
+    width: 100%;
   }
 }
