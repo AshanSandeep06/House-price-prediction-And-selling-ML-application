@@ -7,5 +7,6 @@ export type HouseListingDetails = {
     bathrooms: number;
     area: string;
     mainImageUrl: string;
-    images?: { url: string }[]
+    images?: { url: string }[];
+    location?: string;
 };

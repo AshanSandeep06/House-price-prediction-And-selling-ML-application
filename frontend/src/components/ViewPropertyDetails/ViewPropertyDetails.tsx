@@ -14,6 +14,8 @@ import PropertyGallery from "../PropertyGallery";
 
 import "./ViewPropertyDetails.css";
 import { HouseListingDetails } from "../../types/HouseListingDetails";
+import ImageSlider from "../ImageSlider";
+import GoogleMapsApi from "../GoogleMapsApi";
 
 interface PropertyDetailsProps {
   property: {
@@ -27,8 +29,16 @@ interface PropertyDetailsProps {
 }
 
 const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
-  const { images, bedrooms, bathrooms, area, description, name, mainImageUrl } =
-    property;
+  const {
+    images,
+    bedrooms,
+    bathrooms,
+    area,
+    description,
+    name,
+    mainImageUrl,
+    location,
+  } = property;
   const [openGallery, setOpenGallery] = useState(false);
 
   const handleGalleryOpen = () => {
@@ -61,14 +71,26 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
           alignItems={"center"}
           spacing={2}
         >
-          <Grid item xs={12} justifyContent={"center"} alignItems={"center"}>
-            <div className="property-image" onClick={handleGalleryOpen}>
+          <Grid
+            item
+            xs={12}
+            display={"flex"}
+            justifyContent={"start"}
+            alignItems={"center"}
+          >
+            <div className="property-image flex justify-center items-center">
               {/* Display the first image as a preview */}
               <img
                 src={mainImageUrl}
                 alt={`${name} Preview`}
                 className="preview-image"
+                onClick={handleGalleryOpen}
               />
+            </div>
+
+            <div className="mt-6">
+              {/* Google Maps Embed API */}
+              <GoogleMapsApi />
             </div>
           </Grid>
         </Grid>
@@ -78,8 +100,8 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
           handleClose={handleGalleryClose}
         />
         <div className="actions">
-          <Button variant="contained" color="primary">
-            Contact Agent
+          <Button variant="contained" color="error">
+            Delete Property
           </Button>
         </div>
       </CardContent>
