@@ -204,7 +204,7 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
           {/* <GoogleMapsApi /> */}
 
           {/*-------------- React-Leaflet Map --------------*/}
-          <ReactLeafletMap />
+          <ReactLeafletMap {...{mapWidth: 900, mapHeight: 600}} />
         </div>
 
         <div>

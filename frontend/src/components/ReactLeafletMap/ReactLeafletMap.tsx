@@ -6,8 +6,9 @@ import "./ReactLeafletMap.css";
 import img1 from "../../assets/img/sale-01.png";
 import locationIcon from "@mui/icons-material/LocationOn";
 import L, { Icon } from "leaflet";
+import MapDetails from "../../types/MapDetails";
 
-const ReactLeafletMap = () => {
+const ReactLeafletMap = (props: MapDetails) => {
   // This is the center variable and this gives because,
   // When the Map is load, initially The map should be zoomed
   // and point to a default location when the Map is initially loaded.
@@ -24,20 +25,22 @@ const ReactLeafletMap = () => {
   });
 
   return (
-    <div id="map">
-      <MapContainer ref={mapRef} center={center} zoom={ZOOM_LEVEL}>
-        <TileLayer
-          url={OsmProvider.url}
-          attribution={OsmProvider.attribution}
-        />
+    <>
+      <div id="map" onClick={props.onClick}>
+        <MapContainer style={{width: props.mapWidth, height: props.mapHeight}} ref={mapRef} center={center} zoom={ZOOM_LEVEL}>
+          <TileLayer
+            url={OsmProvider.url}
+            attribution={OsmProvider.attribution}
+          />
 
-        <Marker icon={customIcon} position={center}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+          <Marker icon={customIcon} position={center}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
+    </>
   );
 };
 

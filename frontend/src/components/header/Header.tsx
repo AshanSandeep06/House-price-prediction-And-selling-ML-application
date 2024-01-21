@@ -36,10 +36,10 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Form from "../Form/index";
 import MyButton from "../MyButton/index";
-import logo from "../../assets/img/sale-01.png";
 import Dashboard from "../Dashboard";
 import Explore from "../Explore";
 import Footer from "../Footer";
+import logo from "../../assets/img/logo.png";
 import { useMyContext } from "../../config/ContextAPI";
 
 const Header = (props: HeaderProps) => {
@@ -196,11 +196,11 @@ const Header = (props: HeaderProps) => {
     // backdrop-blur-md  bg-[hsla(0,0%,100%,.4)]
     <header className="flex w-full h-20 !text-[rgb(81,81,81)] z-10 fixed top-0">
       <div className="w-1/4 h-full flex items-center gap-2.5 pl-[38px]">
-        <img src={logo} alt="UserImage" className="w-10 h-10" />
+        <img src={logo} alt="UserImage" className="w-[100px] h-[100px] relative top-[2px]" />
         <NavLink to={"/home"} onClick={() => scrollToComponent(dashboardRef)}>
           <h1
             style={{ letterSpacing: "2px", marginTop: "2px" }}
-            className="h-max mb-[1px] !text-2xl !text-black"
+            className="h-max mb-[1px] !text-2xl !text-black relative right-4"
           >
             Ever Estate
           </h1>
