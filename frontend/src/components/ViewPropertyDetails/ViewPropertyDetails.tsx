@@ -69,7 +69,7 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
   return (
     <Card className="property-details-card">
       <CardContent>
-        <div className="flex justify-center gap-[100px] mb-[10px]">
+        <div className="flex justify-center gap-[100px] mb-[13px]">
           <div>
             <Typography variant="h5" component="div" className="property-title">
               {name}
@@ -90,14 +90,17 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
               </Typography>
             </p>
 
-            <div className="property-image flex justify-center items-center mb-5">
+            <div className="relative property-image flex justify-center items-center mb-5">
               {/* Display the first image as a preview */}
               <img
                 src={mainImageUrl}
                 alt={`${name} Preview`}
                 className="preview-image"
-                onClick={handleGalleryOpen}
               />
+
+                <h4
+                onClick={handleGalleryOpen}
+                className="preview absolute w-full text-center cursor-pointer">View Images</h4>
             </div>
 
             <div

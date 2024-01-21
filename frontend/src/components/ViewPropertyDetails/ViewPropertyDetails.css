@@ -52,10 +52,6 @@
   line-height: 1.5;
 }
 
-.property-image > img {
-  cursor: pointer;
-}
-
 .preview-image {
   width: 450px;
   height: 375px;
@@ -126,4 +122,13 @@
 
 .box p > CheckIcon {
   color: #da2c32;
+}
+
+.preview {
+  background-color: rgb(33, 33, 33, 70%);
+  color: rgb(255, 255, 255, 70%);
+  bottom: 40px;
+  width: 155px;
+  padding: 10px;
+  border-radius: 5px;
 }
