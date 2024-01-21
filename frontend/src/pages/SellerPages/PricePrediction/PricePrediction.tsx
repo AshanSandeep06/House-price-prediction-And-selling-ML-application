@@ -30,6 +30,11 @@ const PricePrediction = () => {
     setGarden("");
   };
 
+  const handlePricePrediction = () => {
+    // Should implement this method
+    setPredictedPrice(90000);
+  }
+
   return (
     <>
       <Header
@@ -181,7 +186,7 @@ const PricePrediction = () => {
                   color: "success",
                   icon: null,
                   text: "Predict Price",
-                  // onClick: handleSaveItem,
+                  onClick: handlePricePrediction,
                 },
                 {
                   color: "warning",

@@ -1,0 +1,14 @@
+#foodMenuHeading2::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 172px;
+    height: 4px;
+    background: #f97316;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  
