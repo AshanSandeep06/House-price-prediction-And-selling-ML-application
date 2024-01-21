@@ -1,10 +1,31 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import "./PricePrediction.css";
 import Form from "../../../components/Form";
 import MyListings from "../MyListings";
 import Header from "../../../components/Header";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 
 const PricePrediction = () => {
+  const [houseName, setHouseName] = useState<string>("");
+  const [houseAddress, setHouseAddress] = useState<string>("");
+  const [bedrooms, setBedrooms] = useState<number>(0);
+  const [bathrooms, setBathrooms] = useState<number>(0);
+  const [houseArea, setHouseArea] = useState<number>(0);
+  const [houseAge, setHouseAge] = useState<string>("");
+  const [Kitchens, setKitchens] = useState<number>(0);
+  const [garden, setGarden] = useState<string>("");
+
+  const handleClearFields = () => {
+    setHouseName("");
+    setHouseAddress("");
+    setBedrooms(0);
+    setBathrooms(0);
+    setHouseArea(0);
+    setHouseAge("");
+    setKitchens(0);
+    setGarden("");
+  };
+
   return (
     <>
       <Header
@@ -30,9 +51,9 @@ const PricePrediction = () => {
                   textFieldType: "text",
                   placeHolderText: "House Name",
                   name: "House Name",
-                  value: "houseName",
+                  value: houseName,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    // setItemCode(event.target.value);
+                    setHouseName(event.target.value);
                   },
                 },
                 {
@@ -40,54 +61,27 @@ const PricePrediction = () => {
                   textFieldType: "text",
                   placeHolderText: "Address",
                   name: "Address",
-                  value: "address",
+                  value: houseAddress,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    // setItemName(event.target.value);
+                    setHouseAddress(event.target.value);
                   },
                 },
                 {
                   label: "Bedrooms",
-                  textFieldType: "text",
+                  textFieldType: "number",
                   placeHolderText: "Bedrooms",
                   name: "Bedrooms",
-                  value: "bedrooms",
-                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    // setDescription(event.target.value);
-                  },
-                },
-                {
-                  label: "Unit Price",
-                  textFieldType: "text",
-                  placeHolderText: "Unit Price",
-                  name: "unitPrice",
-                  value: "unitPrice",
+                  value: bedrooms,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
                     const { name, value, type } = event.target;
-                    let price = "0.00";
-
-                    if (name == "unitPrice" && isNaN(Number(value))) {
-                      if (value == ".") {
-                        // price = Number(unitPrice) + value;
-                        // setUnitPrice(price);
-                        return;
-                      }
-
-                      price = "0.00";
-                      // setUnitPrice(price);
-                      console.log(value);
+                    if (name == "Bedrooms" && isNaN(Number(value))) {
+                      setBedrooms(0);
                       return;
-                    }
-
-                    if (name == "unitPrice" && parseFloat(value) < 0) {
+                    } else if (name == "Bedrooms" && Number(value) < 0) {
                       return;
-                    }
-
-                    if (value == ".") {
-                      // price = unitPrice + value;
                     } else {
-                      price = value;
+                      setBedrooms(Number(event.target.value));
                     }
-                    // setUnitPrice(price);
                   },
                 },
                 {
@@ -95,29 +89,39 @@ const PricePrediction = () => {
                   textFieldType: "number",
                   placeHolderText: "Bathrooms",
                   name: "Bathrooms",
-                  value: "bathrooms",
+                  value: bathrooms,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
                     const { name, value, type } = event.target;
-                    if (name == "qtyOnHand" && isNaN(parseInt(value))) {
-                      // setQtyOnHand(0);
+                    if (name == "Bathrooms" && isNaN(Number(value))) {
+                      setBathrooms(0);
                       return;
-                    }
-
-                    if (name == "qtyOnHand" && parseInt(value) < 0) {
+                    } else if (name == "Bathrooms" && Number(value) < 0) {
                       return;
+                    } else {
+                      setBathrooms(Number(event.target.value));
                     }
-                    // setQtyOnHand(parseInt(value));
                   },
                 },
                 {
                   label: "House Area",
                   textFieldType: "text",
                   placeHolderText: "House Area",
-                  readOnly: true,
-                  name: "House Area",
-                  value: "houseArea",
+                  name: "HouseArea",
+                  value: houseArea,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    // setDiscount(Number(event.target.value));
+                    const { name, value, type } = event.target;
+                    if (name == "HouseArea" && isNaN(Number(value))) {
+                      setHouseArea(0);
+                      return;
+                    } else if (name == "HouseArea" && Number(value) < 0) {
+                      return;
+                    } else {
+                      if (name == "HouseArea" && isNaN(Number(value))) {
+                        setHouseArea(0);
+                      } else {
+                        setHouseArea(Number(event.target.value));
+                      }
+                    }
                   },
                 },
                 {
@@ -125,13 +129,63 @@ const PricePrediction = () => {
                   textFieldType: "text",
                   placeHolderText: "House Age",
                   name: "House Age",
-                  value: "houseAge",
+                  value: houseAge,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    // setItemCode(event.target.value);
+                    setHouseAge(event.target.value);
+                  },
+                },
+
+                {
+                  label: "Kitchens",
+                  textFieldType: "number",
+                  placeHolderText: "Kitchens",
+                  name: "Kitchens",
+                  value: Kitchens,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    const { name, value, type } = event.target;
+                    if (name == "Kitchens" && isNaN(Number(value))) {
+                      setKitchens(0);
+                      return;
+                    } else if (name == "Kitchens" && Number(value) < 0) {
+                      return;
+                    } else {
+                      setKitchens(Number(event.target.value));
+                    }
+                  },
+                },
+
+                {
+                  label: "Garden (y/n)",
+                  textFieldType: "text",
+                  placeHolderText: "y/n",
+                  name: "Garden",
+                  value: garden,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    setGarden(event.target.value);
                   },
                 },
               ]}
               buttonsArray={[]}
+            />
+          </section>
+
+          <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-end">
+            <Form
+              textFieldsArray={[]}
+              buttonsArray={[
+                {
+                  color: "success",
+                  icon: null,
+                  text: "Predict Price",
+                  // onClick: handleSaveItem,
+                },
+                {
+                  color: "warning",
+                  icon: <BackspaceIcon />,
+                  text: "Clear",
+                  onClick: handleClearFields,
+                },
+              ]}
             />
           </section>
         </main>
