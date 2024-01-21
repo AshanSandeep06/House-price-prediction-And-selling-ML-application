@@ -6,6 +6,7 @@ import { HouseListingDetails } from "../../../types/HouseListingDetails";
 import house01 from "../../../assets/house-01.png";
 import house02 from "../../../assets/img/house-03.jpg";
 import house03 from "../../../assets/img/house-04.jpg";
+import "./MyListings.css";
 
 const MyListings = (props: any) => {
   const { dashboardRef } = useMyContext();
@@ -94,7 +95,7 @@ const MyListings = (props: any) => {
 
   return (
     <main className="gap-2 w-full px-10 bg-[#FAFAFF]">
-      <section className="w-full flex items-center flex-col px-4 pt-4">
+      <section className="w-full flex items-center flex-col px-4">
         <div className="mb-2">
           <h1 className="relative pb-[8px]" id="foodMenuHeading">
             {props.title}

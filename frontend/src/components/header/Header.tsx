@@ -50,8 +50,12 @@ const Header = (props: HeaderProps) => {
 
   const { dashboardRef, exploreRef, footerRef } = useMyContext();
 
-  const scrollToComponent = (ref: RefObject<any>) => {
-    ref.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToComponent = (ref: RefObject<any> | null) => {
+    if (ref !== null) {
+      if (ref == dashboardRef || ref == exploreRef || ref == footerRef) {
+        ref.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   useEffect(() => {
@@ -219,7 +223,9 @@ const Header = (props: HeaderProps) => {
                     ? dashboardRef
                     : resource == "explore"
                     ? exploreRef
-                    : footerRef
+                    : resource == "contact"
+                    ? footerRef
+                    : null
                 )
               }
             >
@@ -228,17 +234,16 @@ const Header = (props: HeaderProps) => {
                   resource.split("_")[0].substring(1) +
                   " " +
                   resource.split("_")[1][0].toUpperCase() +
-                  resource.split("_")[1].substring(1) + " " +
+                  resource.split("_")[1].substring(1) +
+                  " " +
                   resource.split("_")[2][0].toUpperCase() +
                   resource.split("_")[2].substring(1)
-
-                  : resource.split("_")[1] ? resource[0].toUpperCase() +
+                : resource.split("_")[1]
+                ? resource[0].toUpperCase() +
                   resource.split("_")[0].substring(1) +
                   " " +
                   resource.split("_")[1][0].toUpperCase() +
                   resource.split("_")[1].substring(1)
-
-
                 : resource[0].toUpperCase() + resource.substring(1)}
             </NavLink>
           ))}
@@ -583,14 +588,14 @@ const Header = (props: HeaderProps) => {
               <MyButton
                 key={index}
                 text={buttonText}
-                resource={"/user/"+buttonText}
+                resource={"/user/" + buttonText}
                 icon={<AccountCircleIcon className="!text-[20px]" />}
                 styles={style2}
               />
             ) : buttonText == "logout" ? (
               <MyButton
                 key={index}
-                resource={"/user/"+buttonText}
+                resource={"/user/" + buttonText}
                 text={buttonText}
                 icon={<LogoutIcon className="!text-[20px]" />}
                 styles={style1}
