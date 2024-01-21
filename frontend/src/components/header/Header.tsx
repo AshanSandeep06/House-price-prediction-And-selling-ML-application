@@ -196,7 +196,11 @@ const Header = (props: HeaderProps) => {
     // backdrop-blur-md  bg-[hsla(0,0%,100%,.4)]
     <header className="flex w-full h-20 !text-[rgb(81,81,81)] z-10 fixed top-0">
       <div className="w-1/4 h-full flex items-center gap-2.5 pl-[38px]">
-        <img src={logo} alt="UserImage" className="w-[100px] h-[100px] relative top-[2px]" />
+        <img
+          src={logo}
+          alt="UserImage"
+          className="w-[100px] h-[100px] relative top-[2px]"
+        />
         <NavLink to={"/home"} onClick={() => scrollToComponent(dashboardRef)}>
           <h1
             style={{ letterSpacing: "2px", marginTop: "2px" }}
@@ -513,7 +517,7 @@ const Header = (props: HeaderProps) => {
                               id="registerTitle"
                               className="col-span-11 text-center text-[22px] font-medium flex justify-center"
                             >
-                              Customer Register Form
+                              Seller Registration Form
                             </h1>
 
                             <span className="p-2 col-span-1">
@@ -526,58 +530,60 @@ const Header = (props: HeaderProps) => {
                             </span>
                           </div>
 
-                          <Form
-                            textFieldsArray={[
-                              {
-                                label: "Full Name",
-                                textFieldType: "text",
-                                name: "fullName",
-                                placeHolderText: "Full Name",
-                              },
-                              {
-                                label: "Username",
-                                textFieldType: "text",
-                                name: "username",
-                                placeHolderText: "Username",
-                              },
-                              {
-                                label: "Password",
-                                textFieldType: "password",
-                                name: "password",
-                                placeHolderText: "Password",
-                              },
-                              {
-                                label: "Address",
-                                textFieldType: "text",
-                                name: "address",
-                                placeHolderText: "Address",
-                              },
-                              {
-                                label: "Contact Number",
-                                textFieldType: "text",
-                                name: "contact",
-                                placeHolderText: "Contact Number",
-                              },
-                              {
-                                label: "Email",
-                                textFieldType: "text",
-                                name: "email",
-                                placeHolderText: "Email",
-                              },
-                            ]}
-                            buttonsArray={[
-                              {
-                                color: "success",
-                                icon: <PersonAddIcon />,
-                                text: "Register",
-                              },
-                              {
-                                color: "error",
-                                icon: <BackspaceIcon />,
-                                text: "Cancel",
-                              },
-                            ]}
-                          />
+                          <div className="mb-[20px]">
+                            <Form
+                              textFieldsArray={[
+                                {
+                                  label: "Full Name",
+                                  textFieldType: "text",
+                                  name: "fullName",
+                                  placeHolderText: "Full Name",
+                                },
+                                {
+                                  label: "Username",
+                                  textFieldType: "text",
+                                  name: "username",
+                                  placeHolderText: "Username",
+                                },
+                                {
+                                  label: "Password",
+                                  textFieldType: "password",
+                                  name: "password",
+                                  placeHolderText: "Password",
+                                },
+                                {
+                                  label: "Address",
+                                  textFieldType: "text",
+                                  name: "address",
+                                  placeHolderText: "Address",
+                                },
+                                {
+                                  label: "Contact Number",
+                                  textFieldType: "text",
+                                  name: "contact",
+                                  placeHolderText: "Contact Number",
+                                },
+                                {
+                                  label: "Email",
+                                  textFieldType: "text",
+                                  name: "email",
+                                  placeHolderText: "Email",
+                                },
+                              ]}
+                              buttonsArray={[
+                                {
+                                  color: "success",
+                                  icon: <PersonAddIcon />,
+                                  text: "Register",
+                                },
+                                {
+                                  color: "error",
+                                  icon: <BackspaceIcon />,
+                                  text: "Cancel",
+                                },
+                              ]}
+                            />
+                          </div>
                         </div>
                       </Box>
                     }
