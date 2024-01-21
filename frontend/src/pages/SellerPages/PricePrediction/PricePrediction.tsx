@@ -4,6 +4,8 @@ import Form from "../../../components/Form";
 import MyListings from "../MyListings";
 import Header from "../../../components/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
+import { Typography } from "@mui/material";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 const PricePrediction = () => {
   const [houseName, setHouseName] = useState<string>("");
@@ -14,6 +16,8 @@ const PricePrediction = () => {
   const [houseAge, setHouseAge] = useState<string>("");
   const [Kitchens, setKitchens] = useState<number>(0);
   const [garden, setGarden] = useState<string>("");
+
+  const [predictedPrice, setPredictedPrice] = useState<number>(50000);
 
   const handleClearFields = () => {
     setHouseName("");
@@ -34,7 +38,7 @@ const PricePrediction = () => {
         prefix="/user/"
       />
 
-      <main className="mt-20 gap-2 w-full pt-6 px-10 bg-[#FAFAFF]">
+      <main className="mt-20 gap-2 w-full pt-6 px-10 bg-[#FAFAFF] h-[calc(100vh-80px)]">
         <main className="gap-2 w-full px-10 bg-[#FAFAFF]">
           <h1
             className="text-center relative !pb-[8px] mb-[35px]"
@@ -187,6 +191,19 @@ const PricePrediction = () => {
                 },
               ]}
             />
+          </section>
+
+          <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-start">
+            <div className="px-12 flex justify-center items-center gap-[8px]">
+              <h1>Your House Predicted Price: </h1>
+              <Typography
+                className="!text-green-500 !font-bold !text-lg flex items-center justify-center !mb-0 text-[28px]"
+                sx={{ fontSize: "1.25rem", marginBottom: 0 }}
+              >
+                <AttachMoneyIcon sx={{ marginRight: 0.5 }} />
+                <span className="text-[28px]">{predictedPrice}</span>
+              </Typography>
+            </div>
           </section>
         </main>
       </main>
