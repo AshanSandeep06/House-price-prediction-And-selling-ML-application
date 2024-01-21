@@ -9,4 +9,7 @@ export type HouseListingDetails = {
     mainImageUrl: string;
     images?: { url: string }[];
     location?: string;
+    ownerName?: string;
+    ownerContact?: string;
+    saleDate?: string;
 };

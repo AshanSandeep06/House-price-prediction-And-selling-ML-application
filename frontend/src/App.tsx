@@ -85,6 +85,9 @@ const App = () => {
               bathrooms={5}
               area={"4200 sqft"}
               mainImageUrl={houseImage2}
+              ownerName="Kasun Bandara"
+              ownerContact="0779905692"
+              saleDate="21-01-2024"
             />
           }
         />

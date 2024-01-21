@@ -67,3 +67,63 @@
   margin-top: 20px;
   text-align: center;
 }
+
+.details-bar {
+  border-radius: 8px;
+}
+
+.info {
+  display: flex;
+  background-color: #eeeeee;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 4px;
+  /* gap: 2rem; */
+}
+
+.info p {
+  font-size: 15px !important;
+}
+
+.info p span,
+.info p a {
+  color: #666;
+}
+
+.details-title {
+  font-size: 25px;
+  color: #303030;
+  padding-bottom: 1.5rem;
+  border-bottom: 0.1rem solid #666;
+}
+
+.flex-div {
+  margin: 12px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.box {
+  flex: 1 1 40rem;
+  font-size: 16px;
+  padding-top: 3px;
+}
+
+.box p {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: #666;
+}
+
+.box i {
+  color: #da2c32;
+  margin-right: 1.5rem;
+}
+
+.box p > CheckIcon {
+  color: #da2c32;
+}
