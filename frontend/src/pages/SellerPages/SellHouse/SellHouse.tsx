@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Header from "../../../components/Header";
 import "./SellHouse.css";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -159,8 +159,8 @@ const SellHouse = () => {
                     name="sellerContact2"
                     placeholder="Seller Contact 2"
                     value={sellerContact2}
-                    InputProps={{
-                      readOnly: true,
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setSellerContact2(event.target.value);
                     }}
                   />
 
@@ -213,65 +213,68 @@ const SellHouse = () => {
                 >
                   <TextField
                     label="House Name"
+                    className="col-span-2"
                     type="text"
                     variant="outlined"
                     name="houseName"
                     placeholder="House Name"
                     value={houseName}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setHouseName(event.target.value);
                     }}
                   />
 
                   <TextField
                     label="House Address"
+                    className="col-span-2"
                     type="text"
                     variant="outlined"
                     name="houseAddress"
                     placeholder="House Address"
                     value={houseAddress}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
+                    fullWidth
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setHouseAddress(event.target.value);
                     }}
                   />
 
                   <TextField
                     label="Bedrooms"
-                    type="text"
+                    type="number"
                     variant="outlined"
                     name="bedrooms"
                     placeholder="Bedrooms"
                     value={bedrooms}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setBedrooms(event.target.value);
                     }}
                   />
 
                   <TextField
                     label="Bathrooms"
-                    type="text"
+                    type="number"
                     variant="outlined"
                     name="bathrooms"
                     placeholder="Bathrooms"
                     value={bathrooms}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setBathrooms(event.target.value);
                     }}
                   />
 
@@ -283,11 +286,11 @@ const SellHouse = () => {
                     placeholder="House Area"
                     value={houseArea}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setHouseArea(event.target.value);
                     }}
                   />
 
@@ -299,27 +302,27 @@ const SellHouse = () => {
                     placeholder="House Age"
                     value={houseAge}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setHouseAge(event.target.value);
                     }}
                   />
 
                   <TextField
                     label="Kitchens"
-                    type="text"
+                    type="number"
                     variant="outlined"
                     name="kitchens"
                     placeholder="Kitchens"
                     value={kitchens}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setKitchens(event.target.value);
                     }}
                   />
 
@@ -331,11 +334,11 @@ const SellHouse = () => {
                     placeholder="Garden (y/n)"
                     value={garden}
                     required
-                    InputProps={{
-                      readOnly: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setGarden(event.target.value);
                     }}
                   />
 
