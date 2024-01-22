@@ -3,6 +3,7 @@ from fastapi import FastAPI
 import uvicorn
 from dotenv import load_dotenv
 import os
+import ml_house_price_prediction_model
 
 load_dotenv()
 app = FastAPI()
