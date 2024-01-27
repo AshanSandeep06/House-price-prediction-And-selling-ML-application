@@ -200,13 +200,13 @@ const PricePrediction = () => {
 
           <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-start">
             <div className="px-12 flex justify-center items-center gap-[8px]">
-              <h1>Your House Predicted Price: </h1>
+              <h1 style={{marginRight: 2}}>Your House Predicted Price: </h1>
               <Typography
                 className="!text-green-500 !font-bold !text-lg flex items-center justify-center !mb-0 text-[28px]"
-                sx={{ fontSize: "1.25rem", marginBottom: 0 }}
+                sx={{ fontSize: "1.25rem", marginBottom: 0, marginRight: 2 }}
               >
-                <AttachMoneyIcon sx={{ marginRight: 0.5 }} />
-                <span className="text-[28px]">{predictedPrice}</span>
+                <span className="text-[28px] mr-[5px]">{predictedPrice}</span>
+                <span style={{marginRight: 0.5, fontSize: 20}}>LKR</span>
               </Typography>
             </div>
           </section>
