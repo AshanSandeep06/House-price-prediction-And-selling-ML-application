@@ -6,6 +6,8 @@ import Header from "../../../components/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { Typography } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import axios from "../../../axios";
+import Swal from "sweetalert2";
 
 const PricePrediction = () => {
   const [houseName, setHouseName] = useState<string>("");
@@ -14,10 +16,10 @@ const PricePrediction = () => {
   const [bathrooms, setBathrooms] = useState<number>(0);
   const [houseArea, setHouseArea] = useState<number>(0);
   const [houseAge, setHouseAge] = useState<string>("");
-  const [Kitchens, setKitchens] = useState<number>(0);
+  const [kitchens, setKitchens] = useState<number>(0);
   const [garden, setGarden] = useState<string>("");
 
-  const [predictedPrice, setPredictedPrice] = useState<number>(50000);
+  const [predictedPrice, setPredictedPrice] = useState<number>(0);
 
   const handleClearFields = () => {
     setHouseName("");
@@ -28,12 +30,61 @@ const PricePrediction = () => {
     setHouseAge("");
     setKitchens(0);
     setGarden("");
+    setPredictedPrice(0);
   };
 
   const handlePricePrediction = () => {
-    // Should implement this method
-    setPredictedPrice(90000);
-  }
+    if (
+      houseName &&
+      houseAddress &&
+      bedrooms &&
+      bathrooms &&
+      houseArea &&
+      houseAge &&
+      kitchens &&
+      garden
+    ) {
+      let dataPayload = {
+        houseName: houseName,
+        houseAddress: houseAddress,
+        bedrooms: bedrooms,
+        bathrooms: bathrooms,
+        houseArea: houseArea,
+        houseAge: houseAge,
+        kitchens: kitchens,
+        garden: garden,
+      };
+
+      axios
+        .post("/predict_house_price", dataPayload)
+        .then((res) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: res.data.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setPredictedPrice(Number(res.data.response));
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data.message
+              ? error.response.data.message
+              : "Failed..!",
+          });
+          setPredictedPrice(0);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Try again..",
+        text: "Please input values to all input Fields",
+      });
+    }
+  };
 
   return (
     <>
@@ -149,7 +200,7 @@ const PricePrediction = () => {
                   textFieldType: "number",
                   placeHolderText: "Kitchens",
                   name: "Kitchens",
-                  value: Kitchens,
+                  value: kitchens,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
                     const { name, value, type } = event.target;
                     if (name == "Kitchens" && isNaN(Number(value))) {
@@ -200,13 +251,13 @@ const PricePrediction = () => {
 
           <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-start">
             <div className="px-12 flex justify-center items-center gap-[8px]">
-              <h1 style={{marginRight: 2}}>Your House Predicted Price: </h1>
+              <h1 style={{ marginRight: 2 }}>Your House Predicted Price: </h1>
               <Typography
                 className="!text-green-500 !font-bold !text-lg flex items-center justify-center !mb-0 text-[28px]"
                 sx={{ fontSize: "1.25rem", marginBottom: 0, marginRight: 2 }}
               >
                 <span className="text-[28px] mr-[5px]">{predictedPrice}</span>
-                <span style={{marginRight: 0.5, fontSize: 20}}>LKR</span>
+                <span style={{ marginRight: 0.5, fontSize: 20 }}>LKR</span>
               </Typography>
             </div>
           </section>
