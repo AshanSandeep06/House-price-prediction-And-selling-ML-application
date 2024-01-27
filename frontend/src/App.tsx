@@ -16,6 +16,7 @@ import SellerProfile from "./pages/SellerPages/SellerProfile";
 import MyListings from "./pages/SellerPages/MyListings";
 import ViewPropertyDetails from "./components/ViewPropertyDetails";
 import axios from "./axios";
+import Swal from "sweetalert2";
 
 import houseImage1 from "./assets/img/house-02.jpg";
 import houseImage2 from "./assets/img/house-03.jpg";
@@ -47,10 +48,20 @@ const App = () => {
       .get("/")
       .then((res) => {
         console.log(res);
-        alert(`Connect With Backend Successfully - ${res.data.Hello}`);
+        Swal.fire({
+          title: "Success",
+          text: `Connect With Backend Successfully - ${res.data.Hello}`,
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
       })
       .catch((error) => {
-        alert(`Connection Failed - ${error.message}`);
+        Swal.fire({
+          title: "Error",
+          text: `Connection Failed - ${error.message}`,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       });
   };
 
