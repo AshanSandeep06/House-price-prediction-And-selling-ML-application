@@ -15,6 +15,7 @@ import SellHouse from "./pages/SellerPages/SellHouse";
 import SellerProfile from "./pages/SellerPages/SellerProfile";
 import MyListings from "./pages/SellerPages/MyListings";
 import ViewPropertyDetails from "./components/ViewPropertyDetails";
+import axios from "./axios";
 
 import houseImage1 from "./assets/img/house-02.jpg";
 import houseImage2 from "./assets/img/house-03.jpg";
@@ -40,6 +41,22 @@ const App = () => {
   // useEffect(() => {
   //   handleBtnLoginClick();
   // }, [setCurrentComponent]);
+
+  const connectWithBackEnd = () => {
+    axios
+      .get("/")
+      .then((res) => {
+        console.log(res);
+        alert(`Connect With Backend Successfully - ${res.data.Hello}`);
+      })
+      .catch((error) => {
+        alert(`Connection Failed - ${error.message}`);
+      });
+  };
+
+  useEffect(() => {
+    connectWithBackEnd();
+  }, []);
 
   return (
     <div className="App">

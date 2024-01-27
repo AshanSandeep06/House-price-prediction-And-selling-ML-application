@@ -3,12 +3,21 @@ from fastapi import FastAPI
 import uvicorn
 from dotenv import load_dotenv
 import os
+from fastapi.middleware.cors import CORSMiddleware
 import ml_house_price_prediction_model
 
 load_dotenv()
 app = FastAPI()
 
-@app.get("/")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/api/v1/")
 def read_root():
     return {"Hello": "World"}
 
