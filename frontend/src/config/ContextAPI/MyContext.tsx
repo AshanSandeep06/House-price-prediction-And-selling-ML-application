@@ -63,8 +63,8 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
   };
 
   const [useStateLocation, setUseStateLocation] = useState({
-    lat: 13.084622,
-    lng: 80.248357,
+    lat: 7.269843363909954,
+    lng: 80.63690185546876,
   });
 
   const allRefs: AllObjects = {

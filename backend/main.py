@@ -48,16 +48,13 @@ async def read_root():
 async def predict_house_price(request: Request):
     # Parse the Json data payload from request body
     request_payload = await request.json()
-    houseName, houseAddress, bedrooms, bathrooms, houseArea, houseAge, kitchens, garden = request_payload.values()
+    houseName, houseAddress, bedrooms, bathrooms, houseArea, houseAge, kitchens, garden, lat, lng, landSize = request_payload.values()
     
     # print("houseName", "houseAddress", "bedrooms", "bathrooms", "houseArea", "houseAge", "kitchens", "garden")
     # print(houseName, houseAddress, bedrooms, bathrooms, houseArea, houseAge, kitchens, garden)
     
     global model
-    
-    feature_names = ['Baths', 'Land size', 'Beds', 'House size', 'Lat', 'Lon']
-    
-    predicted_house_value = await predict_price_with_feature_names(model, [[bathrooms, 50.0, bedrooms, houseArea, 80.500000, 6.166670]], feature_names)
+    predicted_house_value = await predict_price_with_feature_names(model, [[bathrooms, landSize, bedrooms, houseArea, lat, lng]], feature_names)
     predicted_house_value = np.round(predicted_house_value[0], 2)
     
     return { "message": "Successfully Predicted Your House Price", "response": predicted_house_value }

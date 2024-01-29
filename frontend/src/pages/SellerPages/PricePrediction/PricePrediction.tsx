@@ -10,6 +10,7 @@ import axios from "../../../axios";
 import Swal from "sweetalert2";
 import ReactLeafletMap from "../../../components/ReactLeafletMap";
 import MapPopup from "../../../components/MapPopup";
+import { useMyContext } from "../../../config/ContextAPI";
 
 const PricePrediction = () => {
   const [houseName, setHouseName] = useState<string>("");
@@ -23,6 +24,8 @@ const PricePrediction = () => {
   const [landSize, setLandSize] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
   const [latitude, setLatitude] = useState<number>(0);
+
+  const { useStateLocation } = useMyContext();
 
   const [openMapPopup, setOpenMapPopup] = useState<boolean>(false);
 
@@ -60,7 +63,10 @@ const PricePrediction = () => {
       houseArea &&
       houseAge &&
       kitchens &&
-      garden
+      garden &&
+      useStateLocation.lat &&
+      useStateLocation.lng &&
+      landSize
     ) {
       let dataPayload = {
         houseName: houseName,
@@ -71,6 +77,9 @@ const PricePrediction = () => {
         houseAge: houseAge,
         kitchens: kitchens,
         garden: garden,
+        lat: latitude,
+        lng: longitude,
+        landSize: landSize
       };
 
       axios
@@ -181,9 +190,9 @@ const PricePrediction = () => {
                   },
                 },
                 {
-                  label: "House Area",
+                  label: "House Area (sqft)",
                   textFieldType: "text",
-                  placeHolderText: "House Area",
+                  placeHolderText: "House Area (sqft)",
                   name: "HouseArea",
                   value: houseArea,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
@@ -203,9 +212,9 @@ const PricePrediction = () => {
                   },
                 },
                 {
-                  label: "Land Size",
+                  label: "Land Size (Perches)",
                   textFieldType: "text",
-                  placeHolderText: "Land Size",
+                  placeHolderText: "Land Size (Perches)",
                   name: "landSize",
                   value: landSize,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
@@ -268,45 +277,17 @@ const PricePrediction = () => {
                   label: "Latitude",
                   textFieldType: "text",
                   placeHolderText: "Latitude",
+                  readOnly: true,
                   name: "latitude",
-                  value: latitude,
-                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    const { name, value, type } = event.target;
-                    if (name == "latitude" && isNaN(Number(value))) {
-                      setLatitude(0);
-                      return;
-                    } else if (name == "latitude" && Number(value) < 0) {
-                      return;
-                    } else {
-                      if (name == "latitude" && isNaN(Number(value))) {
-                        setLatitude(0);
-                      } else {
-                        setLatitude(Number(event.target.value));
-                      }
-                    }
-                  },
+                  value: Number(useStateLocation.lat),
                 },
                 {
                   label: "Longitude",
                   textFieldType: "text",
                   placeHolderText: "Longitude",
+                  readOnly: true,
                   name: "longitude",
-                  value: longitude,
-                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    const { name, value, type } = event.target;
-                    if (name == "longitude" && isNaN(Number(value))) {
-                      setLongitude(0);
-                      return;
-                    } else if (name == "longitude" && Number(value) < 0) {
-                      return;
-                    } else {
-                      if (name == "longitude" && isNaN(Number(value))) {
-                        setLongitude(0);
-                      } else {
-                        setLongitude(Number(event.target.value));
-                      }
-                    }
-                  },
+                  value: Number(useStateLocation.lng),
                 },
               ]}
               buttonsArray={[]}
@@ -324,10 +305,14 @@ const PricePrediction = () => {
 
                 <MapPopup
                   open={openMapPopup}
-                  handleClose={handleMapPopupClose} />
+                  handleClose={handleMapPopupClose}
+                />
               </section>
 
-              <section style={{flexDirection: 'column', paddingTop: 75, gap: 100}} className="pb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-end">
+              <section
+                style={{ flexDirection: "column", paddingTop: 75, gap: 100 }}
+                className="pb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-end"
+              >
                 <Form
                   textFieldsArray={[]}
                   buttonsArray={[

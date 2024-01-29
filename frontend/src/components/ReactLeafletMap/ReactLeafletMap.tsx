@@ -35,7 +35,7 @@ const ReactLeafletMap = (props: MapDetails) => {
   // and point to a default location when the Map is initially loaded.
   // This is the Default value for it.
   // const [center, setCenter] = useState({ lat: 13.084622, lng: 80.248357 });
-  const ZOOM_LEVEL = 9;
+  const ZOOM_LEVEL = 7;
   const mapRef = useRef<any>();
 
   const { useStateLocation, setUseStateLocation } = useMyContext();
