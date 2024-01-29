@@ -8,6 +8,8 @@ import { Typography } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import axios from "../../../axios";
 import Swal from "sweetalert2";
+import ReactLeafletMap from "../../../components/ReactLeafletMap";
+import MapPopup from "../../../components/MapPopup";
 
 const PricePrediction = () => {
   const [houseName, setHouseName] = useState<string>("");
@@ -22,6 +24,16 @@ const PricePrediction = () => {
   const [longitude, setLongitude] = useState<number>(0);
   const [latitude, setLatitude] = useState<number>(0);
 
+  const [openMapPopup, setOpenMapPopup] = useState<boolean>(false);
+
+  const handleMapPopupOpen = () => {
+    setOpenMapPopup(true);
+  };
+
+  const handleMapPopupClose = () => {
+    setOpenMapPopup(false);
+  };
+
   const [predictedPrice, setPredictedPrice] = useState<number>(0);
 
   const handleClearFields = () => {
@@ -34,6 +46,9 @@ const PricePrediction = () => {
     setKitchens(0);
     setGarden("");
     setPredictedPrice(0);
+    setLandSize(0);
+    setLongitude(0);
+    setLatitude(0);
   };
 
   const handlePricePrediction = () => {
@@ -296,39 +311,65 @@ const PricePrediction = () => {
               ]}
               buttonsArray={[]}
             />
-          </section>
 
-          <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-end">
-            <Form
-              textFieldsArray={[]}
-              buttonsArray={[
-                {
-                  color: "success",
-                  icon: null,
-                  text: "Predict Price",
-                  onClick: handlePricePrediction,
-                },
-                {
-                  color: "warning",
-                  icon: <BackspaceIcon />,
-                  text: "Clear",
-                  onClick: handleClearFields,
-                },
-              ]}
-            />
-          </section>
+            <section className="mt-2 pb-10 d-flex justify-around mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-start">
+              <section>
+                <ReactLeafletMap
+                  {...{
+                    mapWidth: 425.075,
+                    mapHeight: 365,
+                    onClick: handleMapPopupOpen,
+                  }}
+                />
 
-          <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-start">
-            <div className="px-12 flex justify-center items-center gap-[8px]">
-              <h1 style={{ marginRight: 2 }}>Your House Predicted Price: </h1>
-              <Typography
-                className="!text-green-500 !font-bold !text-lg flex items-center justify-center !mb-0 text-[28px]"
-                sx={{ fontSize: "1.25rem", marginBottom: 0, marginRight: 2 }}
-              >
-                <span className="text-[28px] mr-[5px]">{predictedPrice}</span>
-                <span style={{ marginRight: 0.5, fontSize: 20 }}>LKR</span>
-              </Typography>
-            </div>
+                <MapPopup
+                  open={openMapPopup}
+                  handleClose={handleMapPopupClose} />
+              </section>
+
+              <section style={{flexDirection: 'column', paddingTop: 75, gap: 100}} className="pb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-end">
+                <Form
+                  textFieldsArray={[]}
+                  buttonsArray={[
+                    {
+                      color: "success",
+                      icon: null,
+                      text: "Predict Price",
+                      onClick: handlePricePrediction,
+                    },
+                    {
+                      color: "warning",
+                      icon: <BackspaceIcon />,
+                      text: "Clear",
+                      onClick: handleClearFields,
+                    },
+                  ]}
+                />
+
+                <section className="mb-6 sm:grid sm:grid-cols-1 lg:flex lg:items-end lg:justify-start">
+                  <div className="px-12 flex justify-center items-center gap-[8px]">
+                    <h1 style={{ marginRight: 2 }}>
+                      Your House Predicted Price:{" "}
+                    </h1>
+                    <Typography
+                      className="!text-green-500 !font-bold !text-lg flex items-center justify-center !mb-0 text-[28px]"
+                      sx={{
+                        fontSize: "1.25rem",
+                        marginBottom: 0,
+                        marginRight: 2,
+                      }}
+                    >
+                      <span className="text-[28px] mr-[5px]">
+                        {predictedPrice}
+                      </span>
+                      <span style={{ marginRight: 0.5, fontSize: 20 }}>
+                        LKR
+                      </span>
+                    </Typography>
+                  </div>
+                </section>
+              </section>
+            </section>
           </section>
         </main>
       </main>

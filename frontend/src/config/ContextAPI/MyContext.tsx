@@ -1,6 +1,7 @@
 import {
   Dispatch,
   RefObject,
+  SetStateAction,
   createContext,
   useContext,
   useRef,
@@ -14,6 +15,8 @@ interface AllObjects {
   dashboardRef: RefObject<any>;
   exploreRef: RefObject<any>;
   footerRef: RefObject<any>;
+  useStateLocation: { lat: number; lng: number };
+  setUseStateLocation: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
   // currentComponent: React.ReactNode;
   // setCurrentComponent: Dispatch<any>;
   // handleBtnLoginClick: () => void;
@@ -37,7 +40,7 @@ interface MyContextProviderProps {
 
 const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
   const navigate = useNavigate();
-  
+
   const homeRef = useRef<any>(null);
   const exploreRef = useRef<any>(null);
   const contactRef = useRef<any>(null);
@@ -59,13 +62,17 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
     }
   };
 
+  const [useStateLocation, setUseStateLocation] = useState({
+    lat: 13.084622,
+    lng: 80.248357,
+  });
+
   const allRefs: AllObjects = {
     dashboardRef: homeRef,
     exploreRef: exploreRef,
     footerRef: contactRef,
-    // currentComponent: currentComponent,
-    // setCurrentComponent: setCurrentComponent,
-    // handleBtnLoginClick: handleBtnLoginClick,
+    useStateLocation: useStateLocation,
+    setUseStateLocation: setUseStateLocation,
   };
 
   return <MyContext.Provider value={allRefs}>{children}</MyContext.Provider>;
