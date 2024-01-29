@@ -10,6 +10,7 @@ import { OsmProvider } from "../../config/Osm-Provider/Osm-Provider";
 import "leaflet/dist/leaflet.css";
 import "./ReactLeafletMap.css";
 import img1 from "../../assets/img/sale-01.png";
+import locationImg from "../../assets/img/location-01.png";
 import locationIcon from "@mui/icons-material/LocationOn";
 import L, { Icon } from "leaflet";
 import MapDetails from "../../types/MapDetails";
@@ -40,8 +41,8 @@ const ReactLeafletMap = (props: MapDetails) => {
   const { useStateLocation, setUseStateLocation } = useMyContext();
 
   const customIcon = new L.Icon({
-    iconUrl: img1,
-    iconSize: [32, 32], // Size of the icon
+    iconUrl: locationImg,
+    iconSize: [50, 50], // Size of the icon
     iconAnchor: [16, 32], // Anchor point of the icon
     popupAnchor: [0, -32], // Popup anchor point
   });
