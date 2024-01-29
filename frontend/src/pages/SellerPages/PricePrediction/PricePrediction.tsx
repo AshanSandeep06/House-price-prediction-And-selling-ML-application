@@ -18,6 +18,9 @@ const PricePrediction = () => {
   const [houseAge, setHouseAge] = useState<string>("");
   const [kitchens, setKitchens] = useState<number>(0);
   const [garden, setGarden] = useState<string>("");
+  const [landSize, setLandSize] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(0);
+  const [latitude, setLatitude] = useState<number>(0);
 
   const [predictedPrice, setPredictedPrice] = useState<number>(0);
 
@@ -185,6 +188,28 @@ const PricePrediction = () => {
                   },
                 },
                 {
+                  label: "Land Size",
+                  textFieldType: "text",
+                  placeHolderText: "Land Size",
+                  name: "landSize",
+                  value: landSize,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    const { name, value, type } = event.target;
+                    if (name == "landSize" && isNaN(Number(value))) {
+                      setLandSize(0);
+                      return;
+                    } else if (name == "landSize" && Number(value) < 0) {
+                      return;
+                    } else {
+                      if (name == "landSize" && isNaN(Number(value))) {
+                        setLandSize(0);
+                      } else {
+                        setLandSize(Number(event.target.value));
+                      }
+                    }
+                  },
+                },
+                {
                   label: "House Age",
                   textFieldType: "text",
                   placeHolderText: "House Age",
@@ -222,6 +247,50 @@ const PricePrediction = () => {
                   value: garden,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
                     setGarden(event.target.value);
+                  },
+                },
+                {
+                  label: "Latitude",
+                  textFieldType: "text",
+                  placeHolderText: "Latitude",
+                  name: "latitude",
+                  value: latitude,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    const { name, value, type } = event.target;
+                    if (name == "latitude" && isNaN(Number(value))) {
+                      setLatitude(0);
+                      return;
+                    } else if (name == "latitude" && Number(value) < 0) {
+                      return;
+                    } else {
+                      if (name == "latitude" && isNaN(Number(value))) {
+                        setLatitude(0);
+                      } else {
+                        setLatitude(Number(event.target.value));
+                      }
+                    }
+                  },
+                },
+                {
+                  label: "Longitude",
+                  textFieldType: "text",
+                  placeHolderText: "Longitude",
+                  name: "longitude",
+                  value: longitude,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    const { name, value, type } = event.target;
+                    if (name == "longitude" && isNaN(Number(value))) {
+                      setLongitude(0);
+                      return;
+                    } else if (name == "longitude" && Number(value) < 0) {
+                      return;
+                    } else {
+                      if (name == "longitude" && isNaN(Number(value))) {
+                        setLongitude(0);
+                      } else {
+                        setLongitude(Number(event.target.value));
+                      }
+                    }
                   },
                 },
               ]}
