@@ -22,9 +22,13 @@ import PropertyGallery from "../../../components/PropertyGallery";
 import MapPopup from "../../../components/MapPopup";
 
 const SellHouse = () => {
-  const [sellingID, setSellingID] = useState<string>("");
-  const [sellingDate, setSellingDate] = useState<string>("");
-  const [sellingTime, setSellingTime] = useState<string>("");
+  const [sellingID, setSellingID] = useState<string>("")
+
+  const [sellingDate, setSellingDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
+  const [sellingTime, setSellingTime] = useState<string>(new Date().toLocaleTimeString("en-US", { hour12: false }));
+  
   const [sellerName, setSellerName] = useState<string>("");
   const [sellerContact1, setSellerContact1] = useState<string>("");
   const [sellerContact2, setSellerContact2] = useState<string>("");
