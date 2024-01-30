@@ -29,7 +29,7 @@ async def predict_price_with_feature_names(model, X, feature_names=None):
             warnings.simplefilter("ignore")
             return model.predict(X)
         
-def loadTheModel():
+def load_the_model():
     global model
     filename = 'model/model_dump/house_price_predictor.pickle'
     
@@ -60,6 +60,6 @@ async def predict_house_price(request: Request):
     return { "message": "Successfully Predicted Your House Price", "response": predicted_house_value }
 
 if __name__ == "__main__":
-    loadTheModel()
+    load_the_model()
     uvicorn.run(app, host=os.environ.get("SERVER_HOST"), port=int(os.environ.get("SERVER_PORT")))
     
