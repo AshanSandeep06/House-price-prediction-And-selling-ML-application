@@ -30,4 +30,4 @@ dist
 venv
 *.pyc
 
-model
+ml_model

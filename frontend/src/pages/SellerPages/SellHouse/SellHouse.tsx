@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Header from "../../../components/Header";
 import "./SellHouse.css";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -20,15 +20,18 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ReactLeafletMap from "../../../components/ReactLeafletMap";
 import PropertyGallery from "../../../components/PropertyGallery";
 import MapPopup from "../../../components/MapPopup";
+import axios from "../../../axios";
 
 const SellHouse = () => {
-  const [sellingID, setSellingID] = useState<string>("")
+  const [sellingID, setSellingID] = useState<string>("");
 
   const [sellingDate, setSellingDate] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
-  const [sellingTime, setSellingTime] = useState<string>(new Date().toLocaleTimeString("en-US", { hour12: false }));
-  
+  const [sellingTime, setSellingTime] = useState<string>(
+    new Date().toLocaleTimeString("en-US", { hour12: false })
+  );
+
   const [sellerName, setSellerName] = useState<string>("");
   const [sellerContact1, setSellerContact1] = useState<string>("");
   const [sellerContact2, setSellerContact2] = useState<string>("");
@@ -56,6 +59,29 @@ const SellHouse = () => {
   const handleMapPopupClose = () => {
     setOpenMapPopup(false);
   };
+
+  const generateNewSellingID = () => {
+    axios
+      .get("/order/generateNewOrderID")
+      .then((res) => {
+        setSellingID(res.data.response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    setInterval(() => {
+      setSellingDate(new Date().toISOString().split("T")[0]);
+      setSellingTime(new Date().toLocaleTimeString("en-US", { hour12: false }));
+    }, 1000);
+
+    generateNewSellingID();
+    // loadAllCustomers();
+    // getAllItems();
+    // loadAllItems();
+  }, []);
 
   return (
     <>
