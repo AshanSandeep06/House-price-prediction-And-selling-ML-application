@@ -7,12 +7,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import pickle
 import numpy as np
 import warnings
+from routes.index import main_router
 
 load_dotenv()
 app = FastAPI()
 baseURL = "/api/v1"
 model = None
 feature_names = ['Baths', 'Land size', 'Beds', 'House size', 'Lat', 'Lon']
+
+app.include_router(main_router, prefix="")
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,7 +34,7 @@ async def predict_price_with_feature_names(model, X, feature_names=None):
         
 def load_the_model():
     global model
-    filename = 'model/model_dump/house_price_predictor.pickle'
+    filename = 'ml_model/model_dump/house_price_predictor.pickle'
     
     with open(filename, 'rb') as file:
         model = pickle.load(file)
