@@ -28,33 +28,3 @@ class seller_routes:
         
     def get_router(self):
         return self.__router
-    
-# ==================================================================================================
-
-# @router.get("/")
-# async def get_all_customers():
-#     return await customer_controller.get_all_customers()
-
-# @router.post("/", callbacks=)
-# async def save_customer():
-#     # Assuming saveCustomer method requires some request data, you can access it via request body
-#     # For example: request_data = await request.json()
-#     # Then pass request_data to the controller method
-#     return await customer_controller.save_customer()
-
-# @router.put("/")
-# async def update_customer():
-#     # Similar to the post route, handle request data if required
-#     return await customer_controller.update_customer()
-
-# @router.delete("/{customerID}")
-# async def delete_customer(customerID: str):
-#     return await customer_controller.delete_customer(customerID)
-
-# @router.get("/getByCustomerID/{customerID}")
-# async def search_customer_by_customerID(customerID: str):
-#     return await customer_controller.search_customer_by_customerID(customerID)
-
-# @router.get("/getByContactNumber/{contactNumber}")
-# async def search_customer_by_contactNumber(contactNumber: str):
-#     return await customer_controller.search_customer_by_contactNumber(contactNumber)
