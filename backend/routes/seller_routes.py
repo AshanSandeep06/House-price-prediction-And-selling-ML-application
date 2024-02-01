@@ -3,9 +3,10 @@ from fastapi import APIRouter
 from pymongo import MongoClient
 from controllers.seller_controller import seller_controller
 from dotenv import load_dotenv
-from index import client
+from motor.motor_asyncio import AsyncIOMotorClient
 
 load_dotenv()
+client = AsyncIOMotorClient(os.environ.get("MONGO_DB_URL"))
 
 # router = APIRouter()
 # seller_controller = seller_controller()

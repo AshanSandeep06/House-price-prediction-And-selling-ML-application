@@ -21,6 +21,7 @@ import ReactLeafletMap from "../../../components/ReactLeafletMap";
 import PropertyGallery from "../../../components/PropertyGallery";
 import MapPopup from "../../../components/MapPopup";
 import axios from "../../../axios";
+import ImageShowSlider from "../../../components/ImageShowSlider";
 
 const SellHouse = () => {
   const [sellingID, setSellingID] = useState<string>("");
@@ -48,7 +49,10 @@ const SellHouse = () => {
   const [garden, setGarden] = useState<string>("");
 
   const imagePath = "/img/uploads/houseImages/";
-  const [houseImage, setHouseImage] = useState<string>("");
+  const [houseImage, setHouseImage] = useState<string | null>(null);
+  const [houseImageChooser, setHouseImageChooser] = useState<string>("");
+  // For file chooser
+  const [fileData, setFileData] = useState<any>();
 
   const [openMapPopup, setOpenMapPopup] = useState(false);
 
@@ -83,6 +87,56 @@ const SellHouse = () => {
     // loadAllItems();
   }, []);
 
+  const [houseImages, setHouseImages] = useState<any>([]);
+
+  const handleSetHouseImages = (event: ChangeEvent<HTMLInputElement>) => {
+    // const files = event.target.files;
+    // if (!files) return;
+
+    // const imagesArray: string[] = [];
+
+    // for (let i = 0; i < files.length; i++) {
+    //   const reader = new FileReader();
+    //   reader.onload = function (e) {
+    //     if (e.target && e.target.result) {
+    //       imagesArray.push(e.target.result.toString());
+    //       if (imagesArray.length === files.length) {
+    //         setHouseImages((prevImages) => [...prevImages, ...imagesArray]);
+    //       }
+    //     }
+    //   };
+    //   reader.readAsDataURL(files[i]);
+    // }
+
+
+    setHouseImageChooser(event.target.value);
+    const file = event.target.files?.[0];
+    setFileData(file);
+    console.log(file);
+
+    console.log("House Images: ", houseImages)
+
+    setHouseImages((prevImages: string[]) => [...prevImages, ...[(file && URL.createObjectURL(file))]]);
+  };
+
+  // const handleSetHouseImages = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  
+  //   if (file) {
+  //     // Clear the existing images and set the new one
+  //     setHouseImages([(file && URL.createObjectURL(file))]);
+  //     // Optionally, you can also set other file-related states here
+  //     setFileData(file);
+  //     setHouseImageChooser(event.target.value);
+  //     console.log(file);
+  //   }
+  // };
+
+  const handleClick = () => {
+    console.log("House Images: ", houseImages)
+  }
+  
+
   return (
     <>
       <Header
@@ -104,7 +158,7 @@ const SellHouse = () => {
             <section className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               <section className="rounded-xl h-max border border-slate-200 px-5 pt-5 pb-8 shadow-lg">
                 <div className="text-center text-white bg-[#0D6EFC] p-2 mb-6 font-light rounded-[8px] text-[24px]">
-                  <h1 className="font-medium">Seller Details</h1>
+                  <h1 onClick={handleClick} className="font-medium">Seller Details</h1>
                 </div>
 
                 <div
@@ -232,14 +286,14 @@ const SellHouse = () => {
                 </div>
               </section>
 
-              <section className="rounded-xl h-max border border-slate-200 px-5 pt-5 pb-8 shadow-lg">
+              <section className="rounded-xl h-max border border-slate-200 px-5 pt-5 pb-8 shadow-lg !mb-8">
                 <div className="text-center text-white bg-[#0D6EFC] p-2 mb-6 font-light rounded-[8px] text-[24px]">
                   <h1 className="font-medium">Property Details</h1>
                 </div>
 
                 <div
                   id="propertyDetails"
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-3"
                 >
                   <TextField
                     label="House Name"
@@ -371,17 +425,57 @@ const SellHouse = () => {
                       setGarden(event.target.value);
                     }}
                   />
+                  <div className="col-span-1 sm:col-span-2 mb-2 text-center">
+                    <label className="mb-8 text-[17px]">
+                      Upload House Images
+                    </label>
 
-                  <div className="flex justify-center items-center col-span-1 sm:col-span-2 mb-2">
+                    <ImageShowSlider images={houseImages} />
+
+                    {/* {houseImages.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        className="object-contain h-[319px] mb-2"
+                        alt={`houseImage-${index}`}
+                      />
+                    ))} */}
+                    <input
+                      id="uploadHouseImagesChooser"
+                      type="file"
+                      required
+                      className="!mt-7 !cursor-pointer !mb-5"
+                      name="uploadHouseImagesChooser"
+                      onChange={handleSetHouseImages}
+                      value={houseImageChooser}
+                      multiple // Allow multiple files to be selected
+                    />
+                  </div>
+
+                  {/* <div className="col-span-1 sm:col-span-2 mb-2 text-center">
+                    <label className="mb-3 text-[17px]">
+                      Upload House Images
+                    </label>
                     {houseImage && (
                       <img
-                        id="houseImage"
+                        id="itemImage"
                         src={houseImage}
-                        className="object-contain h-[140px]"
+                        className="object-contain h-[319px]"
+                        alt="selectedImage"
                         // ref={itemImageRef}
                       />
                     )}
-                  </div>
+                    <TextField
+                      id="uploadItemImageChooser"
+                      type="file"
+                      variant="outlined"
+                      required
+                      className="!mt-7 !cursor-pointer !mb-5"
+                      name="itemImage"
+                      value={houseImageChooser}
+                      onChange={handleSetHouseImage}
+                    />
+                  </div> */}
 
                   <div className="flex sm:justify-end items-center col-span-1 sm:col-span-2 flex-wrap justify-center gap-[22px] sm:gap-[0px]">
                     <Button
