@@ -50,7 +50,7 @@ const SellHouse = () => {
 
   const imagePath = "/img/uploads/houseImages/";
   const [houseImage, setHouseImage] = useState<string | null>(null);
-  const [houseImageChooser, setHouseImageChooser] = useState<string>("");
+  const [houseImageChooser, setHouseImageChooser] = useState<FileList[]>([]);
   // For file chooser
   const [fileData, setFileData] = useState<any>();
 
@@ -89,39 +89,38 @@ const SellHouse = () => {
 
   const [houseImages, setHouseImages] = useState<any>([]);
 
-  const handleSetHouseImages = (event: ChangeEvent<HTMLInputElement>) => {
-    // const files = event.target.files;
-    // if (!files) return;
+  // const handleSetHouseImages = (event: ChangeEvent<HTMLInputElement>) => {
+  //   // const files = event.target.files;
+  //   // if (!files) return;
 
-    // const imagesArray: string[] = [];
+  //   // const imagesArray: string[] = [];
 
-    // for (let i = 0; i < files.length; i++) {
-    //   const reader = new FileReader();
-    //   reader.onload = function (e) {
-    //     if (e.target && e.target.result) {
-    //       imagesArray.push(e.target.result.toString());
-    //       if (imagesArray.length === files.length) {
-    //         setHouseImages((prevImages) => [...prevImages, ...imagesArray]);
-    //       }
-    //     }
-    //   };
-    //   reader.readAsDataURL(files[i]);
-    // }
+  //   // for (let i = 0; i < files.length; i++) {
+  //   //   const reader = new FileReader();
+  //   //   reader.onload = function (e) {
+  //   //     if (e.target && e.target.result) {
+  //   //       imagesArray.push(e.target.result.toString());
+  //   //       if (imagesArray.length === files.length) {
+  //   //         setHouseImages((prevImages) => [...prevImages, ...imagesArray]);
+  //   //       }
+  //   //     }
+  //   //   };
+  //   //   reader.readAsDataURL(files[i]);
+  //   // }
 
+  //   setHouseImageChooser((prevFile) => [...prevFile, ...[event.target.value]]);
+  //   const file = event.target.files?.[0];
+  //   setFileData(file);
+  //   console.log(file);
 
-    setHouseImageChooser(event.target.value);
-    const file = event.target.files?.[0];
-    setFileData(file);
-    console.log(file);
+  //   console.log("House Images: ", houseImages)
 
-    console.log("House Images: ", houseImages)
-
-    setHouseImages((prevImages: string[]) => [...prevImages, ...[(file && URL.createObjectURL(file))]]);
-  };
+  //   setHouseImages((prevImages: string[]) => [...prevImages, ...[(file && URL.createObjectURL(file))]]);
+  // };
 
   // const handleSetHouseImages = (event: ChangeEvent<HTMLInputElement>) => {
   //   const file = event.target.files?.[0];
-  
+
   //   if (file) {
   //     // Clear the existing images and set the new one
   //     setHouseImages([(file && URL.createObjectURL(file))]);
@@ -132,10 +131,72 @@ const SellHouse = () => {
   //   }
   // };
 
+  // const handleSetHouseImages = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files;
+  //   if (!files) return;
+
+  //   const imagesArray: string[] = [];
+
+  //   for (let i = 0; i < files.length; i++) {
+  //     const file = files[i];
+      
+  //     const imageUrl = file && URL.createObjectURL(file);
+  //     imagesArray.push(imageUrl);
+  //   }
+
+  //   // ----------------------------------------------------------------------------------------------
+  //   setHouseImageChooser((prevFile) => [...prevFile, ...[event.target?.files]]);
+
+  //   setFileData(files);
+
+  //   console.log(files);
+
+  //   console.log("House Images: ", houseImages);
+
+  //   setHouseImages((prevImages: string[]) => [
+  //     ...prevImages,
+  //     ...imagesArray,
+  //   ]);
+  // };
+
+  // -------------------------------------------------------------------------------------
+
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = event.target.files;
+    if (!selectedFiles) return;
+
+    const imagesArray: string[] = [];
+    const filesArray: File[] = [];
+
+    // Add previous files to filesArray if there are any
+    const prevFiles = files ? Array.from(files) : [];
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const imageUrl = URL.createObjectURL(file);
+      imagesArray.push(imageUrl);
+      filesArray.push(file);
+    }
+
+    setImages((prevImages) => [...prevImages, ...imagesArray]);
+
+    // Merge previous files with new files
+    const mergedFiles = [...prevFiles, ...filesArray];
+    const newFileList = new DataTransfer();
+    mergedFiles.forEach((file) => {
+      newFileList.items.add(file);
+    });
+
+    setFiles(newFileList.files);
+  };
+
   const handleClick = () => {
-    console.log("House Images: ", houseImages)
-  }
-  
+    console.log("House Images: ", images);
+    console.log("File Chooser: ", files);
+  };
 
   return (
     <>
@@ -158,7 +219,9 @@ const SellHouse = () => {
             <section className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               <section className="rounded-xl h-max border border-slate-200 px-5 pt-5 pb-8 shadow-lg">
                 <div className="text-center text-white bg-[#0D6EFC] p-2 mb-6 font-light rounded-[8px] text-[24px]">
-                  <h1 onClick={handleClick} className="font-medium">Seller Details</h1>
+                  <h1 className="font-medium">
+                    Seller Details
+                  </h1>
                 </div>
 
                 <div
@@ -279,6 +342,7 @@ const SellHouse = () => {
                       variant="contained"
                       color="warning"
                       // onClick={handleClearInvoiceDetails}
+                      onClick={handleClick}
                     >
                       Clear
                     </Button>
@@ -430,7 +494,7 @@ const SellHouse = () => {
                       Upload House Images
                     </label>
 
-                    <ImageShowSlider images={houseImages} />
+                    <ImageShowSlider images={images} />
 
                     {/* {houseImages.map((image, index) => (
                       <img
@@ -446,9 +510,8 @@ const SellHouse = () => {
                       required
                       className="!mt-7 !cursor-pointer !mb-5"
                       name="uploadHouseImagesChooser"
-                      onChange={handleSetHouseImages}
-                      value={houseImageChooser}
-                      multiple // Allow multiple files to be selected
+                      multiple
+                      onChange={handleFileChange}
                     />
                   </div>
 
