@@ -8,6 +8,7 @@ import pickle
 import numpy as np
 import warnings
 from routes.index import main_router
+import requests
 
 load_dotenv()
 app = FastAPI()
@@ -46,6 +47,20 @@ async def read_root():
 # @app.get("/items/{item_id}")
 # def read_item(item_id: int, q: Union[str, None] = None):
 #     return {"item_id": item_id, "q": q}
+
+@app.post(baseURL+"/get_address_from_coords")
+async def get_address_from_coords(request: Request):
+    request_payload = await request.json()
+    lat, lon = request_payload.values()
+    
+    url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=18&addressdetails=1&accept-language=en"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        address = data.get('display_name', 'Address not found')
+        return { "message": "Successfully getting the Location from Coords", "response": address }
+    else:
+        return "Failed to retrieve address"
 
 @app.post(baseURL+"/predict_house_price")
 async def predict_house_price(request: Request):

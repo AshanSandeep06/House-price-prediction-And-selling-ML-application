@@ -1,9 +1,17 @@
 from pydantic import BaseModel
 
-class Selling_House(BaseModel):
-    seller_id: str
-    seller_name: str
-    seller_contact_01: str
-    seller_contact_02: str
-    seller_address: str
-    seller_email: str
+class SellingHouse(BaseModel):
+    sellingID: str
+    name: str
+    description: str
+    address: str
+    price: float
+    bedrooms: int
+    bathrooms: int
+    area: float
+    location: dict
+    ownerName: str
+    ownerContact1: str
+    ownerContact2: str
+    saleDate: str
+    saleTime: str

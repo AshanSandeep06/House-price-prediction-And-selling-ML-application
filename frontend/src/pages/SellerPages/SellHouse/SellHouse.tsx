@@ -22,8 +22,14 @@ import PropertyGallery from "../../../components/PropertyGallery";
 import MapPopup from "../../../components/MapPopup";
 import axios from "../../../axios";
 import ImageShowSlider from "../../../components/ImageShowSlider";
+import { HouseListingDetails } from "../../../types/HouseListingDetails";
+import { NewHouseListing } from "../../../types/NewHouseListing";
+import { useMyContext } from "../../../config/ContextAPI";
+import Swal from "sweetalert2";
 
 const SellHouse = () => {
+  const { useStateLocation, setUseStateLocation } = useMyContext();
+
   const [sellingID, setSellingID] = useState<string>("");
 
   const [sellingDate, setSellingDate] = useState<string>(
@@ -33,20 +39,22 @@ const SellHouse = () => {
     new Date().toLocaleTimeString("en-US", { hour12: false })
   );
 
-  const [sellerName, setSellerName] = useState<string>("");
-  const [sellerContact1, setSellerContact1] = useState<string>("");
-  const [sellerContact2, setSellerContact2] = useState<string>("");
-  const [sellerAddress, setSellerAddress] = useState<string>("");
-  const [sellerEmail, setSellerEmail] = useState<string>("");
+  const [sellerName, setSellerName] = useState<string>("Kasun Bandara");
+  const [sellerContact1, setSellerContact1] = useState<string>("0774589862");
+  const [sellerContact2, setSellerContact2] = useState<string>("0914585092");
+  const [sellerAddress, setSellerAddress] = useState<string>("Kandy");
+  const [sellerEmail, setSellerEmail] = useState<string>("kasun123@gmail.com");
 
   const [houseName, setHouseName] = useState<string>("");
+  const [houseDescription, setHouseDescription] = useState<string>("");
   const [houseAddress, setHouseAddress] = useState<string>("");
-  const [bedrooms, setBedrooms] = useState<string>("");
-  const [bathrooms, setBathrooms] = useState<string>("");
-  const [houseArea, setHouseArea] = useState<string>("");
-  const [houseAge, setHouseAge] = useState<string>("");
+  const [bedrooms, setBedrooms] = useState<number>(0);
+  const [bathrooms, setBathrooms] = useState<number>(0);
+  const [houseArea, setHouseArea] = useState<number>(0);
+  const [houseAge, setHouseAge] = useState<number>(0);
   const [kitchens, setKitchens] = useState<string>("");
   const [garden, setGarden] = useState<string>("");
+  const [sellingPrice, setSellingPrice] = useState<number>(0);
 
   const imagePath = "/img/uploads/houseImages/";
   const [houseImage, setHouseImage] = useState<string | null>(null);
@@ -64,28 +72,34 @@ const SellHouse = () => {
     setOpenMapPopup(false);
   };
 
-  const generateNewSellingID = () => {
-    axios
-      .get("/order/generateNewOrderID")
-      .then((res) => {
-        setSellingID(res.data.response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
     setInterval(() => {
       setSellingDate(new Date().toISOString().split("T")[0]);
       setSellingTime(new Date().toLocaleTimeString("en-US", { hour12: false }));
     }, 1000);
 
-    generateNewSellingID();
+    generate_new_selling_ID();
+    get_address_from_coords();
     // loadAllCustomers();
     // getAllItems();
     // loadAllItems();
-  }, []);
+  }, [useStateLocation]);
+
+  const get_address_from_coords = () => {
+    let dataPayload = {
+      lat: useStateLocation.lat,
+      lon: useStateLocation.lng,
+    };
+
+    axios
+      .post("/get_address_from_coords", dataPayload)
+      .then((res) => {
+        setHouseAddress(res.data.response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const [houseImages, setHouseImages] = useState<any>([]);
 
@@ -139,7 +153,7 @@ const SellHouse = () => {
 
   //   for (let i = 0; i < files.length; i++) {
   //     const file = files[i];
-      
+
   //     const imageUrl = file && URL.createObjectURL(file);
   //     imagesArray.push(imageUrl);
   //   }
@@ -198,6 +212,150 @@ const SellHouse = () => {
     console.log("File Chooser: ", files);
   };
 
+  const generate_new_selling_ID = () => {
+    axios
+      .get("/selling_house/generate_new_selling_ID")
+      .then((res) => {
+        console.log("Generate new id: ", res);
+        setSellingID(res.data.content);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleCancelHouseListing = () => {
+    handleClearSellerDetails();
+    handleClearPropertyDetails();
+
+    setSellingPrice(0);
+  };
+
+  const handleClearSellerDetails = () => {
+    setSellerName("");
+    setSellerContact1("");
+    setSellerContact2("");
+    setSellerAddress("");
+    setSellerEmail("");
+  };
+
+  const handleClearPropertyDetails = () => {
+    generate_new_selling_ID();
+
+    setHouseName("");
+    setHouseDescription("");
+    setHouseAddress("");
+    setBathrooms(0);
+    setBedrooms(0);
+    setHouseArea(0);
+    setHouseAge(0);
+    setSellingPrice(0);
+    setImages([]);
+    setFiles(null);
+  };
+
+  const uploadHouseImages = () => {
+    if (files && files.length > 0) {
+      const formData = new FormData();
+
+      Array.from(files).forEach((file, index) => {
+        const houseImageName =
+          sellingID +
+          "_" +
+          houseName +
+          "-image." +
+          files[index].name.split(".")[1];
+        formData.append(`houseImage-${index}`, file, houseImageName);
+      });
+
+      axios
+        .put("/selling_house/saveHouseImages/" + sellingID, formData)
+        .then((res) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: res.data.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+          handleCancelHouseListing();
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data.message,
+          });
+
+          handleCancelHouseListing();
+        });
+    } else {
+      alert("Please input all House Images and try again..!");
+      handleCancelHouseListing();
+    }
+  };
+
+  // Place a House Listing
+  const handlePlaceHouseListing = () => {
+    // setCurrentDate(DateTime.now().toISODate());
+    // setCurrentTime(DateTime.local().toLocaleString(DateTime.TIME_SIMPLE));
+
+    axios
+      .get("/selling_house/generate_new_selling_ID")
+      .then((res) => {
+        setSellingID(res.data.content);
+
+        // Place Order function
+        let newHouseListing: NewHouseListing = {
+          sellingID: res.data.content,
+          name: houseName,
+          description: houseDescription,
+          address: houseAddress,
+          price: sellingPrice,
+          bedrooms: bedrooms,
+          bathrooms: bathrooms,
+          area: houseArea,
+          location: { lat: useStateLocation.lat, lng: useStateLocation.lng },
+          ownerName: sellerName,
+          ownerContact1: sellerContact1,
+          ownerContact2: sellerContact2,
+          saleDate: sellingDate,
+          saleTime: sellingTime,
+        };
+
+        console.log(newHouseListing);
+
+        axios
+          .post("/selling_house/", newHouseListing, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            uploadHouseImages();
+          })
+          .catch((error) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.response.data.message,
+            });
+
+            handleCancelHouseListing();
+          });
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+
+        handleCancelHouseListing();
+      });
+  };
+
   return (
     <>
       <Header
@@ -219,9 +377,7 @@ const SellHouse = () => {
             <section className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               <section className="rounded-xl h-max border border-slate-200 px-5 pt-5 pb-8 shadow-lg">
                 <div className="text-center text-white bg-[#0D6EFC] p-2 mb-6 font-light rounded-[8px] text-[24px]">
-                  <h1 className="font-medium">
-                    Seller Details
-                  </h1>
+                  <h1 className="font-medium">Seller Details</h1>
                 </div>
 
                 <div
@@ -377,6 +533,23 @@ const SellHouse = () => {
                   />
 
                   <TextField
+                    label="Description"
+                    className="col-span-2"
+                    type="text"
+                    variant="outlined"
+                    name="houseDescription"
+                    placeholder="Description"
+                    value={houseDescription}
+                    required
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setHouseDescription(event.target.value);
+                    }}
+                  />
+
+                  <TextField
                     label="House Address"
                     className="col-span-2"
                     type="text"
@@ -386,11 +559,14 @@ const SellHouse = () => {
                     value={houseAddress}
                     required
                     fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    multiline
+                    maxRows={4}
+                    style={{ height: "max-content" }}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                       setHouseAddress(event.target.value);
+                    }}
+                    InputProps={{
+                      readOnly: true,
                     }}
                   />
 
@@ -406,7 +582,7 @@ const SellHouse = () => {
                       shrink: true,
                     }}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      setBedrooms(event.target.value);
+                      setBedrooms(Number(event.target.value));
                     }}
                   />
 
@@ -422,7 +598,7 @@ const SellHouse = () => {
                       shrink: true,
                     }}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      setBathrooms(event.target.value);
+                      setBathrooms(Number(event.target.value));
                     }}
                   />
 
@@ -438,7 +614,7 @@ const SellHouse = () => {
                       shrink: true,
                     }}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      setHouseArea(event.target.value);
+                      setHouseArea(Number(event.target.value));
                     }}
                   />
 
@@ -454,11 +630,11 @@ const SellHouse = () => {
                       shrink: true,
                     }}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      setHouseAge(event.target.value);
+                      setHouseAge(Number(event.target.value));
                     }}
                   />
 
-                  <TextField
+                  {/* <TextField
                     label="Kitchens"
                     type="number"
                     variant="outlined"
@@ -488,7 +664,25 @@ const SellHouse = () => {
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                       setGarden(event.target.value);
                     }}
+                  /> */}
+
+                  <TextField
+                    label="Selling Price"
+                    className="col-span-2"
+                    type="text"
+                    variant="outlined"
+                    name=""
+                    placeholder="Selling Price"
+                    value={sellingPrice}
+                    required
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setSellingPrice(Number(event.target.value));
+                    }}
                   />
+
                   <div className="col-span-1 sm:col-span-2 mb-2 text-center">
                     <label className="mb-8 text-[17px]">
                       Upload House Images
@@ -581,11 +775,21 @@ const SellHouse = () => {
                   />
                 </div>
 
-                <div className="mt-[25px] flex sm:justify-start items-center col-span-1 sm:col-span-2 flex-wrap justify-center gap-[22px] sm:gap-[0px]">
+                <div className="mt-[25px] flex sm:justify-around items-center col-span-1 sm:col-span-2 flex-wrap justify-center gap-[22px] sm:gap-[0px]">
+                  <Button
+                    className="!px-[20px] !capitalize !font-poppins !font-normal !text-[15px]"
+                    variant="contained"
+                    color="error"
+                    onClick={handleCancelHouseListing}
+                  >
+                    Cancel
+                  </Button>
+
                   <Button
                     className="!px-[20px] !capitalize !font-poppins !font-normal !text-[15px]"
                     variant="contained"
                     color="success"
+                    onClick={handlePlaceHouseListing}
                   >
                     Sell Your House
                   </Button>

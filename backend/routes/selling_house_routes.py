@@ -15,12 +15,9 @@ class selling_house_routes:
         self.config_routes()
         
     def config_routes(self):
-        self.__router.add_api_route("/", self.__selling_house_controller.get_all_sellers, methods=["GET"])
-        self.__router.add_api_route("/", self.__seller_co__selling_house_controllerntroller.create_seller, methods=["POST"])
-        self.__router.add_api_route("/", self.__selling_house_controller.update_seller, methods=["PUT"])
-        self.__router.add_api_route("/{seller_id}", self.__selling_house_controller.delete_seller, methods=["DELETE"])
-        self.__router.add_api_route("/get_by_seller_id/{seller_id}", self.__selling_house_controller.get_seller_by_seller_id, methods=["GET"])
-        self.__router.add_api_route("/get_by_seller_contact/{seller_contact}", self.__selling_house_controller.get_seller_by_seller_contact, methods=["GET"])
+        self.__router.add_api_route("/generate_new_selling_ID", self.__selling_house_controller.generate_new_selling_ID, methods=["GET"])
+        self.__router.add_api_route("/", self.__selling_house_controller.save_house_listing, methods=["POST"])
+        self.__router.add_api_route("/saveHouseImages", self.__selling_house_controller.save_house_images, methods=["PUT"])
         
     def get_router(self):
         return self.__router

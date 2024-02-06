@@ -46,28 +46,28 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
   const contactRef = useRef<any>(null);
   const [currentComponent, setCurrentComponent] = useState<any>(null);
 
-  const handleBtnLoginClick = () => {
-    switch (currentComponent) {
-      case null:
-        setCurrentComponent(<HomePage />);
-        break;
+  // const handleBtnLoginClick = () => {
+  //   switch (currentComponent) {
+  //     case null:
+  //       setCurrentComponent(<HomePage />);
+  //       break;
 
-      case (<HomePage />):
-        setCurrentComponent(<UserPage />);
-        break;
+  //     case (<HomePage />):
+  //       setCurrentComponent(<UserPage />);
+  //       break;
 
-      default:
-        setCurrentComponent(null);
-        break;
-    }
-  };
+  //     default:
+  //       setCurrentComponent(null);
+  //       break;
+  //   }
+  // };
 
   const [useStateLocation, setUseStateLocation] = useState({
     lat: 7.269843363909954,
     lng: 80.63690185546876,
   });
 
-  const allRefs: AllObjects = {
+  const allData: AllObjects = {
     dashboardRef: homeRef,
     exploreRef: exploreRef,
     footerRef: contactRef,
@@ -75,7 +75,7 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
     setUseStateLocation: setUseStateLocation,
   };
 
-  return <MyContext.Provider value={allRefs}>{children}</MyContext.Provider>;
+  return <MyContext.Provider value={allData}>{children}</MyContext.Provider>;
 };
 
 export { MyContextProvider, useMyContext };
