@@ -1,6 +1,8 @@
 import asyncio
 from fastapi.responses import JSONResponse
 from models.selling_house_model import SellingHouse
+from fastapi import UploadFile, File, HTTPException
+from typing import List
 
 class selling_house_controller:
     def __init__(self, client):
@@ -40,70 +42,63 @@ class selling_house_controller:
 
     # Save House Listing
     async def save_house_listing(self, house_listing_details: SellingHouse):
-        print(house_listing_details)
-        # try:
-        #     seller_id = seller_data.seller_id
-        #     seller_name = seller_data.seller_name
-        #     seller_contact_01 = seller_data.seller_contact_01
-        #     seller_contact_02 = seller_data.seller_contact_02
-        #     seller_address = seller_data.seller_address
-        #     seller_email = seller_data.seller_email
-            
-        #     seller = await self.collection.find_one({"seller_id": seller_id})
-        #     if not seller:
-        #         new_seller_obj = Seller(
-        #             seller_id=seller_id,
-        #             seller_name=seller_name,
-        #             seller_contact_01=seller_contact_01,
-        #             seller_contact_02=seller_contact_02,
-        #             seller_address=seller_address,
-        #             seller_email=seller_email
-        #         )
-        #         await self.collection.insert_one(new_seller_obj.dict())
-        #     else:
-        #         response = {"code": "01", "message": f"This {seller_id} - Seller is Already Exist, Therefore can't be Added", "content": None}
-        #         return JSONResponse(status_code=500, content=response, media_type="application/json")
-            
-        #     response = {"code": "00", "message": "Seller has been Successfully Saved..!", "content": None}
-        #     return JSONResponse(status_code=200, content=response, media_type="application/json")
-        
-        # except Exception as e:
-        #     response = {"code": "02", "message": str(e), "content": None}
-        #     return JSONResponse(status_code=500, content=response, media_type="application/json")
-
-    # Save House Images
-    async def save_house_images(self, seller_update_data):
         try:
-            seller_id = seller_update_data.seller_id
-            seller_name = seller_update_data.seller_name
-            seller_contact_01 = seller_update_data.seller_contact_01
-            seller_contact_02 = seller_update_data.seller_contact_02
-            seller_address = seller_update_data.seller_address
-            seller_email = seller_update_data.seller_email
+            selling_id = house_listing_details.selling_id
             
-            seller = await self.collection.find_one({"seller_id": seller_id})
-            if seller:
-                updated_seller_obj = {
-                    "seller_id": seller_id,
-                    "seller_name": seller_name,
-                    "seller_contact_01": seller_contact_01,
-                    "seller_contact_02": seller_contact_02,
-                    "seller_address": seller_address,
-                    "seller_email": seller_email
-                }
-                result = await self.collection.update_one({"seller_id": seller_id}, {"$set": updated_seller_obj})
-                
-                if result.matched_count:
-                    response = {"code": "00", "message": "Seller has been Successfully Updated..!", "content": None}
+            house_data = house_listing_details.dict()
+            
+            house_listing = await self.collection.find_one({"selling_id": selling_id})
+            if not house_listing:
+                result = await self.collection.insert_one(house_data)
+                if result:
+                    response = {"code": "00", "message": "House listing saved successfully..!", "content": None}
                     return JSONResponse(status_code=200, content=response, media_type="application/json")
                 else:
-                    response = {"code": "01", "message": "Something went wrong..!", "content": None}
+                    response = {"code": "01", "message": "Failed to save house listing", "content": None}
                     return JSONResponse(status_code=500, content=response, media_type="application/json")
-                
             else:
-                response = {"code": "01", "message": f"There is no Seller with this ID - {seller_id}, Therefore can't be Updated", "content": None}
+                response = {"code": "01", "message": f"This {selling_id} - This House is Already in Selling status, Therefore can't be Added", "content": None}
                 return JSONResponse(status_code=500, content=response, media_type="application/json")
-        
+            
+        except Exception as e:
+            response = {"code": "02", "message": str(e), "content": None}
+            return JSONResponse(status_code=500, content=response, media_type="application/json")
+
+    # Save House Images
+    async def save_house_images(self, selling_id: str, files: List[UploadFile] = File(...)):
+        try:
+            house_listing = await self.collection.find_one({"selling_id": selling_id})
+            if not house_listing:
+                response = {"code": "01", "message": "This House Listing doesn't exist.!", "content": None}
+                return JSONResponse(status_code=500, content=response, media_type="application/json")
+            else:
+                house_details = SellingHouse(
+                    selling_id=selling_id,
+                    houseImages=[]
+                )
+                
+                house_data = house_details.dict()
+                house_data['houseImages'] = []
+
+                # Save multiple house images
+                for file in files:
+                    content = await file.read()
+                    filename = file.filename
+                    # Save file to your storage (e.g., file system, cloud storage) and get the URL
+                    # For demonstration purposes, let's assume we're saving the file to a local directory named 'uploads'
+                    file_path = f"uploads/{filename}"
+                    with open(file_path, "wb") as f:
+                        f.write(content)
+                    house_data['houseImages'].append(file_path)
+
+                # Insert house details into MongoDB collection
+                result = await self.collection.insert_one(house_data)
+                if result:
+                    response = {"code": "00", "message": "Multiple House Images have been Successfully Saved.!", "content": None}
+                    return JSONResponse(status_code=200, content=response, media_type="application/json")
+                else:
+                    response = {"code": "01", "message": "Failed to save house images.!", "content": None}
+                    return JSONResponse(status_code=500, content=response, media_type="application/json")
         except Exception as e:
             response = {"code": "02", "message": str(e), "content": None}
             return JSONResponse(status_code=500, content=response, media_type="application/json")

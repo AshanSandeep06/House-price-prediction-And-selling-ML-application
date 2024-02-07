@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
 class SellingHouse(BaseModel):
-    sellingID: str
+    selling_id: str
+    seller_id: str
     name: str
     description: str
     address: str
@@ -10,6 +11,7 @@ class SellingHouse(BaseModel):
     bathrooms: int
     area: float
     location: dict
+    houseImages: list
     ownerName: str
     ownerContact1: str
     ownerContact2: str

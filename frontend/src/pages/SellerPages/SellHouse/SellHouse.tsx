@@ -258,12 +258,16 @@ const SellHouse = () => {
     if (files && files.length > 0) {
       const formData = new FormData();
 
+      let i = 0;
       Array.from(files).forEach((file, index) => {
         const houseImageName =
           sellingID +
           "_" +
           houseName +
-          "-image." +
+          "-image" +
+          "_0" +
+          i +
+          "." +
           files[index].name.split(".")[1];
         formData.append(`houseImage-${index}`, file, houseImageName);
       });
