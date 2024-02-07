@@ -266,14 +266,18 @@ const SellHouse = () => {
           houseName +
           "-image" +
           "_0" +
-          i +
+          (i++) +
           "." +
           files[index].name.split(".")[1];
-        formData.append(`houseImage-${index}`, file, houseImageName);
+        formData.append(`files`, file, houseImageName);
       });
 
       axios
-        .put("/selling_house/saveHouseImages/" + sellingID, formData)
+        .put("/selling_house/saveHouseImages/" + sellingID+"/"+ "S00-001", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
         .then((res) => {
           Swal.fire({
             position: "top-end",
@@ -312,7 +316,8 @@ const SellHouse = () => {
 
         // Place Order function
         let newHouseListing: NewHouseListing = {
-          sellingID: res.data.content,
+          selling_id: res.data.content,
+          seller_id: "S00-001",
           name: houseName,
           description: houseDescription,
           address: houseAddress,
@@ -326,6 +331,7 @@ const SellHouse = () => {
           ownerContact2: sellerContact2,
           saleDate: sellingDate,
           saleTime: sellingTime,
+          houseImages: []
         };
 
         console.log(newHouseListing);

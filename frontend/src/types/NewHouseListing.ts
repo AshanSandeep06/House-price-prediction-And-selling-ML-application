@@ -1,5 +1,6 @@
 export type NewHouseListing = {
-    sellingID: string;
+    selling_id: string;
+    seller_id: string;
     name: string;
     description: string;
     address: string;
@@ -7,6 +8,7 @@ export type NewHouseListing = {
     bedrooms: number;
     bathrooms: number;
     area: number;
+    houseImages: []
     mainImageUrl?: string;
     images?: { url: string }[];
     location: { lat: number, lng: number };
