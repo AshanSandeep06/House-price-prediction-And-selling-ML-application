@@ -15,10 +15,18 @@ import KingBedIcon from "@mui/icons-material/KingBed";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { NavLink } from "react-router-dom";
+import { NavLink, Route } from "react-router-dom";
+import ViewPropertyDetails from "../ViewPropertyDetails";
+import { useNavigate } from "react-router-dom";
 
 const HouseListing = (props: HouseListingDetails) => {
   const houseImagesPath = "/img/uploads/houseImages/";
+  const navigate = useNavigate();
+
+  const handleViewPropertyDetails = () => {
+    // Navigate to the ViewPropertyDetails component with props data
+    navigate("/user/myListings/viewProperty", { state: { props } });
+  };
 
   return (
     <Paper
@@ -65,7 +73,10 @@ const HouseListing = (props: HouseListingDetails) => {
             sx={{ fontSize: "1.25rem", marginBottom: 1 }}
           >
             {props.price}
-            <span className="" style={{position: 'relative', top: '-1px'}}> LKR</span>
+            <span className="" style={{ position: "relative", top: "-1px" }}>
+              {" "}
+              LKR
+            </span>
           </Typography>
           <Divider className="!mb-[5px]" />
           <CardContent className="!p-0">
@@ -96,11 +107,12 @@ const HouseListing = (props: HouseListingDetails) => {
         </CardContent>
 
         <div className="flex justify-center mb-6 mt-2">
-          <NavLink to={"/user/myListings/viewProperty"}>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded !mt-0">
-              View Property
-            </button>
-          </NavLink>
+          <button
+            onClick={handleViewPropertyDetails}
+            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded !mt-0"
+          >
+            View Property
+          </button>
         </div>
       </Card>
     </Paper>

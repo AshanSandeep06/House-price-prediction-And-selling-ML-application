@@ -74,7 +74,7 @@ const PropertyGallery: React.FC<PropertyGalleryProps> = ({
             alt={`Property Image ${currentImageIndex + 1}`}
             className="gallery-image !h-[500px] object-cover"
           /> */}
-        <ImageSlider />
+        <ImageSlider houseImages={images} />
 
         {/* <div className="gallery-nav">
             <Button onClick={handlePrevImage}>Previous</Button>

@@ -58,7 +58,7 @@ const ReactLeafletMap = (props: MapDetails) => {
         <MapContainer
           style={{ width: props.mapWidth, height: props.mapHeight }}
           ref={mapRef}
-          center={useStateLocation}
+          center={props.location ? props.location : useStateLocation}
           zoom={ZOOM_LEVEL}
         >
           <TileLayer
@@ -69,7 +69,7 @@ const ReactLeafletMap = (props: MapDetails) => {
           {/* Separate component to handle map events */}
           <MapEventHandler mapHandleClick={mapHandleClick} />
 
-          <Marker icon={customIcon} position={useStateLocation}>
+          <Marker icon={customIcon} position={props.location ? props.location : useStateLocation}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>

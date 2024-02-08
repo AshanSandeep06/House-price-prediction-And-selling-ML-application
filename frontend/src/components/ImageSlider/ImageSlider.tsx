@@ -8,11 +8,14 @@ import { Button } from "@mui/material";
 
 import "./ImageSlider.css";
 
-const dummyImages = [houseImage1, houseImage3, houseImage2, houseImage1];
+type ImageSliderProps = {
+  houseImages: string[];
+};
 
-const ImageSlider = () => {
+const ImageSlider = (props: ImageSliderProps) => {
+  const houseImagesPath = "/img/uploads/houseImages/";
   const [activeIndex, setActiveIndex] = useState(0);
-  const [images, setImages] = useState(dummyImages);
+  const [images, setImages] = useState(props.houseImages);
 
   const handlePrev = () => {
     setActiveIndex((prevIndex) =>
@@ -46,7 +49,7 @@ const ImageSlider = () => {
     <div>
       <div className="flex justify-center items-center gap-x-[50px]">
         <img
-          src={images[activeIndex]}
+          src={houseImagesPath + images[activeIndex]}
           alt={`Image ${activeIndex + 1}`}
           className="mb-4 rounded-lg shadow-lg max-h-[410px] object-cover"
         />
@@ -55,7 +58,7 @@ const ImageSlider = () => {
           {images.map((image, index) => (
             <img
               key={index}
-              src={image}
+              src={houseImagesPath + image}
               alt={`Thumbnail ${index + 1}`}
               className={`h-[4rem] w-[4rem] images rounded-md object-cover cursor-pointer ${
                 index === activeIndex ? "border-2 border-blue-500" : ""

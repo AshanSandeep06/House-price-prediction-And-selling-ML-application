@@ -93,6 +93,7 @@ const App = () => {
         <Route path="/user/predict_house_price" element={<PricePrediction />} />
         <Route path="/user/sell_your_house" element={<SellHouse />} />
         <Route path="/user/my_profile" element={<SellerProfile />} />
+
         <Route
           path="/user/myListings/viewProperty"
           element={
@@ -107,7 +108,7 @@ const App = () => {
               bathrooms={5}
               area={4200}
               ownerName="Kasun Bandara"
-              saleDate="21-01-2024"
+              saleDate="21-01-2323232323"
               selling_id={""}
               seller_id={""}
               location={{
