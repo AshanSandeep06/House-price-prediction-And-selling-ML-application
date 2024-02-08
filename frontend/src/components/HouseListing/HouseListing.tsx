@@ -64,8 +64,8 @@ const HouseListing = (props: HouseListingDetails) => {
             className="!text-green-500 !font-bold !text-lg"
             sx={{ fontSize: "1.25rem", marginBottom: 1 }}
           >
-            <AttachMoneyIcon sx={{ marginRight: 0.5 }} />
             {props.price}
+            <span className="" style={{position: 'relative', top: '-1px'}}> LKR</span>
           </Typography>
           <Divider className="!mb-[5px]" />
           <CardContent className="!p-0">
