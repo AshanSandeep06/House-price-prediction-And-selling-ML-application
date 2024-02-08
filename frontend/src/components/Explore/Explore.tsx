@@ -33,6 +33,7 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
+      landSize: 15,
       area: 4200,
       description: "",
       houseImages: [],
@@ -40,6 +41,7 @@ const Explore = (props: any) => {
         lat: 0,
         lng: 0
       },
+      houseAge: 3,
       ownerContact1: "",
       ownerContact2: "",
       ownerName: "",
@@ -55,6 +57,7 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
+      landSize: 15,
       area: 4200,
       description: "",
       houseImages: [],
@@ -62,6 +65,31 @@ const Explore = (props: any) => {
         lat: 0,
         lng: 0
       },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      houseAge: 3,
+      seller_id: "",
+      selling_id: ""
+    },
+
+    {
+      name: "Beautiful Villa",
+      address: "123 Main Street",
+      price: 500000,
+      bedrooms: 4,
+      bathrooms: 3,
+      landSize: 15,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      houseAge: 3,
       ownerContact1: "",
       ownerContact2: "",
       ownerName: "",
@@ -77,6 +105,7 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
+      landSize: 15,
       area: 4200,
       description: "",
       houseImages: [],
@@ -86,6 +115,7 @@ const Explore = (props: any) => {
       },
       ownerContact1: "",
       ownerContact2: "",
+      houseAge: 3,
       ownerName: "",
       saleDate: "",
       saleTime: "",
@@ -99,6 +129,32 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
+      landSize: 15,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      houseAge: 3,
+      seller_id: "",
+      selling_id: ""
+
+    },
+
+    {
+      name: "Beautiful Villa",
+      address: "123 Main Street",
+      price: 500000,
+      bedrooms: 4,
+      bathrooms: 3,
+      landSize: 15,
       area: 4200,
       description: "",
       houseImages: [],
@@ -112,6 +168,7 @@ const Explore = (props: any) => {
       saleDate: "",
       saleTime: "",
       seller_id: "",
+      houseAge: 3,
       selling_id: ""
     },
 
@@ -122,6 +179,7 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: 4200,
+      landSize: 15,
       description: "",
       houseImages: [],
       location: {
@@ -133,29 +191,7 @@ const Explore = (props: any) => {
       ownerName: "",
       saleDate: "",
       saleTime: "",
-      seller_id: "",
-      selling_id: ""
-
-    },
-
-    {
-      name: "Beautiful Villa",
-      address: "123 Main Street",
-      price: 500000,
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 4200,
-      description: "",
-      houseImages: [],
-      location: {
-        lat: 0,
-        lng: 0
-      },
-      ownerContact1: "",
-      ownerContact2: "",
-      ownerName: "",
-      saleDate: "",
-      saleTime: "",
+      houseAge: 3,
       seller_id: "",
       selling_id: ""
     },
@@ -167,30 +203,10 @@ const Explore = (props: any) => {
       bedrooms: 4,
       bathrooms: 3,
       area: 4200,
+      landSize: 15,
       description: "",
       houseImages: [],
-      location: {
-        lat: 0,
-        lng: 0
-      },
-      ownerContact1: "",
-      ownerContact2: "",
-      ownerName: "",
-      saleDate: "",
-      saleTime: "",
-      seller_id: "",
-      selling_id: ""
-    },
-
-    {
-      name: "Beautiful Villa",
-      address: "123 Main Street",
-      price: 500000,
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 4200,
-      description: "",
-      houseImages: [],
+      houseAge: 3,
       location: {
         lat: 0,
         lng: 0

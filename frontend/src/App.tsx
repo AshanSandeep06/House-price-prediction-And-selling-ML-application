@@ -96,31 +96,7 @@ const App = () => {
 
         <Route
           path="/user/myListings/viewProperty"
-          element={
-            <ViewPropertyDetails
-              name={"Beautiful House"}
-              description={
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, unde delectus aspernatur veniam architecto ex labore itaque quo quod hic officiis eum laboriosam deleniti accusamus error quas modi, sequi illo."
-              }
-              address={"123 Main Street"}
-              price={50000}
-              bedrooms={3}
-              bathrooms={5}
-              area={4200}
-              ownerName="Kasun Bandara"
-              saleDate="21-01-2323232323"
-              selling_id={""}
-              seller_id={""}
-              location={{
-                lat: 0,
-                lng: 0,
-              }}
-              houseImages={[houseImage1, houseImage2, houseImage3, houseImage2]}
-              ownerContact1={""}
-              ownerContact2={""}
-              saleTime={""}
-            />
-          }
+          element={<ViewPropertyDetails />}
         />
       </Routes>
     </div>

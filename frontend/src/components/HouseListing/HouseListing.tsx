@@ -88,6 +88,7 @@ const HouseListing = (props: HouseListingDetails) => {
                 color: "text.secondary",
                 // backgroundColor: "#EEEEEE",
                 marginTop: 10,
+                marginBottom: 15,
               }}
             >
               <KingBedIcon sx={{ marginRight: 0.8, color: "#2563EB" }} />
@@ -102,6 +103,13 @@ const HouseListing = (props: HouseListingDetails) => {
               <div style={{ textAlign: "center" }}>{props.bathrooms} Baths</div>
               <SquareFootIcon sx={{ marginLeft: 3.5, color: "#2563EB" }} />
               <div style={{ textAlign: "center" }}>{props.area} sq ft</div>
+            </div>
+
+            <div className="flex justify-center">
+              <KingBedIcon sx={{ marginRight: 0.8, color: "#2563EB" }} />
+              <div style={{ textAlign: "center" }}>
+                {props.landSize} Perches
+              </div>
             </div>
           </CardContent>
         </CardContent>

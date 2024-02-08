@@ -14,9 +14,12 @@ const MyListings = (props: any) => {
 
   useEffect(() => {
     loadAllSellerHouseListings();
+    console.log("SSSSSSSSSSSSS");
   }, []);
 
-  const [allSellerHouseListingsData, setAllSellerHouseListingsData] = useState<HouseListingDetails[]>([]);
+  const [allSellerHouseListingsData, setAllSellerHouseListingsData] = useState<
+    HouseListingDetails[]
+  >([]);
 
   const loadAllSellerHouseListings = () => {
     axios

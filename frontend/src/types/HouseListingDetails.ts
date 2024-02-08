@@ -8,6 +8,8 @@ export type HouseListingDetails = {
     bedrooms: number;
     bathrooms: number;
     area: number;
+    houseAge: number;
+    landSize: number;
     location: {lat: number, lng: number}
     houseImages: string[]
     ownerName: string;

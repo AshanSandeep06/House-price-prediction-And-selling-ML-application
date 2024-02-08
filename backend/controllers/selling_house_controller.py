@@ -115,3 +115,25 @@ class selling_house_controller:
             
             response = {"code": "00", "message": "All Seller House Listings has been succesfully fetched.!", "content": all_house_listings}
             return JSONResponse(status_code=200, content=response, media_type="application/json")
+        
+    # Delete House Listing by selling_id
+    async def delete_house_listing(self, selling_id: str):
+        try:
+            house_listing = await self.collection.find_one({"selling_id": selling_id})
+            if house_listing:
+                result = await self.collection.delete_one({"selling_id": selling_id})
+                
+                if result.deleted_count:
+                    response = {"code": "00", "message": "Your House Listing has been Successfully Deleted..!", "content": None}
+                    return JSONResponse(status_code=200, content=response, media_type="application/json")
+                else:
+                    response = {"code": "01", "message": "Something went wrong..!", "content": None}
+                    return JSONResponse(status_code=500, content=response, media_type="application/json")
+                
+            else:
+                response = {"code": "01", "message": f"There is no House Listing with this Selling ID - {selling_id}, Therefore can't delete the House Listing..!", "content": None}
+                return JSONResponse(status_code=500, content=response, media_type="application/json")
+        
+        except Exception as e:
+            response = {"code": "02", "message": str(e), "content": None}
+            return JSONResponse(status_code=500, content=response, media_type="application/json")

@@ -8,6 +8,8 @@ export type NewHouseListing = {
     bedrooms: number;
     bathrooms: number;
     area: number;
+    landSize: number;
+    houseAge: number;
     houseImages: []
     mainImageUrl?: string;
     images?: { url: string }[];

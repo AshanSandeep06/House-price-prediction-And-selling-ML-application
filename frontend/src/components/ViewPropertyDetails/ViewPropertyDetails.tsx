@@ -28,7 +28,10 @@ import { HouseListingDetails } from "../../types/HouseListingDetails";
 import ImageSlider from "../ImageSlider";
 import GoogleMapsApi from "../GoogleMapsApi";
 import ReactLeafletMap from "../ReactLeafletMap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "../../axios";
+import HouseListing from "../HouseListing";
+import Swal from "sweetalert2";
 
 interface PropertyDetailsProps {
   property: {
@@ -41,14 +44,17 @@ interface PropertyDetailsProps {
   };
 }
 
-const ViewPropertyDetails = (props: HouseListingDetails) => {
+const ViewPropertyDetails = () => {
   const [openGallery, setOpenGallery] = useState(false);
   const locationProp = useLocation();
   // Access props data from location state
   const propsData = locationProp.state?.props;
   const {
+    selling_id,
     bedrooms,
     bathrooms,
+    houseAge,
+    landSize,
     area,
     description,
     name,
@@ -62,6 +68,7 @@ const ViewPropertyDetails = (props: HouseListingDetails) => {
     ownerContact2,
   } = propsData;
   const houseImagesPath = "/img/uploads/houseImages/";
+  const navigate = useNavigate();
 
   const handleGalleryOpen = () => {
     setOpenGallery(true);
@@ -71,12 +78,46 @@ const ViewPropertyDetails = (props: HouseListingDetails) => {
     setOpenGallery(false);
   };
 
+  const handleBack = () => {
+    navigate("/user/my_listings", { replace: true });
+  };
+
+  const handleDeleteHouseListing = () => {
+    axios
+      .delete("/selling_house/" + selling_id)
+      .then((res) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        navigate("/user/my_listings", { replace: true });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message
+            ? err.response.data.message
+            : "Your House Listing deletion Failed.!",
+        });
+      });
+  };
+
   return (
     <Card className="property-details-card">
       <CardContent>
         <div className="flex justify-center gap-[100px] mb-[13px]">
           <div>
-            <Typography variant="h5" component="div" className="property-title">
+            <Typography
+              variant="h5"
+              component="div"
+              className="property-title"
+              sx={{ marginBottom: 1 / 3 }}
+            >
               {name}
             </Typography>
 
@@ -212,7 +253,9 @@ const ViewPropertyDetails = (props: HouseListingDetails) => {
           {/* <GoogleMapsApi /> */}
 
           {/*-------------- React-Leaflet Map --------------*/}
-          <ReactLeafletMap {...{ mapWidth: 900, mapHeight: 600, location: location }} />
+          <ReactLeafletMap
+            {...{ mapWidth: 900, mapHeight: 600, location: location }}
+          />
         </div>
 
         <div>
@@ -222,46 +265,29 @@ const ViewPropertyDetails = (props: HouseListingDetails) => {
           <div className="flex-div">
             <div className="box">
               <p>
-                <i>rooms :</i>
+                <i>bedrooms :</i>
                 <span>{bedrooms} BHK</span>
               </p>
-              <p>
-                <i>deposit amount :</i>
-                <span>0</span>
-              </p>
+
               <p>
                 <i>status :</i>
-                <span>ready to move</span>
+                <span>Sale</span>
               </p>
+
               <p>
-                <i>bedroom :</i>
-                <span>3</span>
+                <i>House Area :</i>
+                <span>{area} sqft</span>
               </p>
+
               <p>
-                <i>bathroom :</i>
-                <span>2</span>
-              </p>
-              <p>
-                <i>balcony :</i>
-                <span>1</span>
+                <i>Land Size :</i>
+                <span>{landSize} Perches</span>
               </p>
             </div>
             <div className="box">
               <p>
-                <i>carpet area :</i>
-                <span>750sqft</span>
-              </p>
-              <p>
                 <i>age :</i>
-                <span>3 years</span>
-              </p>
-              <p>
-                <i>room floor :</i>
-                <span>3</span>
-              </p>
-              <p>
-                <i>total floors :</i>
-                <span>22</span>
+                <span>{houseAge} years</span>
               </p>
               <p>
                 <i>furnished :</i>
@@ -279,7 +305,7 @@ const ViewPropertyDetails = (props: HouseListingDetails) => {
           <div className="flex-div">
             <div className="box">
               <p>
-                <CheckIcon className="!text-[#da2c32] mr-[5px]" />
+                <ClearIcon className="!text-[#da2c32] mr-[5px]" />
                 <span>lifts</span>
               </p>
               <p>
@@ -345,10 +371,28 @@ const ViewPropertyDetails = (props: HouseListingDetails) => {
           handleClose={handleGalleryClose}
         />
 
-        <div className="actions">
-          <Button variant="contained" color="error">
-            Delete Property
-          </Button>
+        <div className="w-full flex justify-center py-[10px] !gap-[40px]">
+          <div className="actions">
+            <Button
+              onClick={handleBack}
+              variant="contained"
+              color="primary"
+              className="!text-[16px]"
+            >
+              Back
+            </Button>
+          </div>
+
+          <div className="actions">
+            <Button
+              onClick={handleDeleteHouseListing}
+              variant="contained"
+              color="error"
+              className="!text-[16px]"
+            >
+              Delete Property
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

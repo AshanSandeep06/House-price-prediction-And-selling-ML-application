@@ -51,6 +51,7 @@ const SellHouse = () => {
   const [bedrooms, setBedrooms] = useState<number>(0);
   const [bathrooms, setBathrooms] = useState<number>(0);
   const [houseArea, setHouseArea] = useState<number>(0);
+  const [landSize, setLandSize] = useState<number>(0);
   const [houseAge, setHouseAge] = useState<number>(0);
   const [kitchens, setKitchens] = useState<string>("");
   const [garden, setGarden] = useState<string>("");
@@ -248,6 +249,7 @@ const SellHouse = () => {
     setBathrooms(0);
     setBedrooms(0);
     setHouseArea(0);
+    setLandSize(0);
     setHouseAge(0);
     setSellingPrice(0);
     setImages([]);
@@ -266,20 +268,24 @@ const SellHouse = () => {
           houseName +
           "-image" +
           "_0" +
-          (i++) +
+          i++ +
           "." +
           files[index].name.split(".")[1];
         formData.append(`files`, file, houseImageName);
       });
 
-      console.log("FormData: ", formData)
+      console.log("FormData: ", formData);
 
       axios
-        .put("/selling_house/saveHouseImages/" + sellingID+"/"+ "S00-001", formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        .put(
+          "/selling_house/saveHouseImages/" + sellingID + "/" + "S00-001",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
-        })
+        )
         .then((res) => {
           Swal.fire({
             position: "top-end",
@@ -327,13 +333,15 @@ const SellHouse = () => {
           bedrooms: bedrooms,
           bathrooms: bathrooms,
           area: houseArea,
+          landSize: landSize,
+          houseAge: houseAge,
           location: { lat: useStateLocation.lat, lng: useStateLocation.lng },
           ownerName: sellerName,
           ownerContact1: sellerContact1,
           ownerContact2: sellerContact2,
           saleDate: sellingDate,
           saleTime: sellingTime,
-          houseImages: []
+          houseImages: [],
         };
 
         console.log(newHouseListing);
@@ -615,7 +623,7 @@ const SellHouse = () => {
                   />
 
                   <TextField
-                    label="House Area"
+                    label="House Area (sqft)"
                     type="text"
                     variant="outlined"
                     name="houseArea"
@@ -627,6 +635,22 @@ const SellHouse = () => {
                     }}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                       setHouseArea(Number(event.target.value));
+                    }}
+                  />
+
+                  <TextField
+                    label="Land Size (perches)"
+                    type="text"
+                    variant="outlined"
+                    name="landSize"
+                    placeholder="Land Size"
+                    value={landSize}
+                    required
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      setLandSize(Number(event.target.value));
                     }}
                   />
 

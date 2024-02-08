@@ -10,6 +10,8 @@ class SellingHouse(BaseModel):
     bedrooms: int
     bathrooms: int
     area: float
+    houseAge: int
+    landSize: float
     location: dict
     houseImages: list
     ownerName: str
