@@ -71,29 +71,23 @@ class selling_house_controller:
         try:
             house_listing = await self.collection.find_one({"selling_id": selling_id, "seller_id": seller_id})
             if not house_listing:
-                print("111111111111111111111111---------------------------------------------------------")
                 response = {"code": "01", "message": "This House Listing doesn't exist.!", "content": None}
                 return JSONResponse(status_code=500, content=response, media_type="application/json")
             else:
-                print("2222222222222222222222---------------------------------------------------------")
-                
                 house_data = house_listing
                 house_data['houseImages'] = []
-                
-                # Update the house listing with new houseImages
-                # house_images = house_listing.get('houseImages', [])
 
-                print("333333333333333---------------------------------------------------------")
                 # Save multiple house images
                 for file in files:
                     content = await file.read()
                     filename = file.filename
                     # Save file to your storage (e.g., file system, cloud storage) and get the URL
                     # For demonstration purposes, let's assume we're saving the file to a local directory named 'uploads'
-                    file_path = f"F:/IJSE 4th Sem AI_ML/ML My Final Project/House-price-prediction_house-selling-ml-application/frontend/src/assets/uploads/houseImages/{filename}"
+                    file_path = f"F:/IJSE 4th Sem AI_ML/ML My Final Project/House-price-prediction_house-selling-ml-application/frontend/public/img/uploads/houseImages/{filename}"
+                    db_file_path = f"{filename}"
                     with open(file_path, "wb") as f:
                         f.write(content)
-                    house_data['houseImages'].append(file_path)
+                    house_data['houseImages'].append(db_file_path)
 
                  # Update houseImages field in the existing document
                 result = await self.collection.update_one({"selling_id": selling_id, "seller_id": seller_id}, {"$set": {"houseImages": house_data['houseImages']}})
@@ -106,3 +100,18 @@ class selling_house_controller:
         except Exception as e:
             response = {"code": "02", "message": str(e), "content": None}
             return JSONResponse(status_code=500, content=response, media_type="application/json")
+    
+    # Get All Seller House Listings by seller_id
+    async def get_all_seller_house_listings(self, seller_id: str):
+        # Find all house listings for the given seller_id
+        all_house_listings = await self.collection.find({"seller_id": seller_id}).to_list(None)
+        
+        if all_house_listings.__len__ == 0:
+            response = {"code": "00", "message": "No House Listings Found for this Seller.!", "content": []}
+            return JSONResponse(status_code=200, content=response, media_type="application/json")
+        else:
+            for listing in all_house_listings:
+                listing['_id'] = str(listing['_id'])  # Convert ObjectId to string
+            
+            response = {"code": "00", "message": "All Seller House Listings has been succesfully fetched.!", "content": all_house_listings}
+            return JSONResponse(status_code=200, content=response, media_type="application/json")

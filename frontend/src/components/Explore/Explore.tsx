@@ -33,8 +33,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house02,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
 
     {
@@ -43,8 +55,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house03,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
 
     {
@@ -53,8 +77,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house02,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
 
     {
@@ -63,8 +99,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house03,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
 
     {
@@ -73,8 +121,21 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house03,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
+
     },
 
     {
@@ -83,8 +144,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house02,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
 
     {
@@ -93,8 +166,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house03,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
 
     {
@@ -103,8 +188,20 @@ const Explore = (props: any) => {
       price: 500000,
       bedrooms: 4,
       bathrooms: 3,
-      area: "4200",
-      mainImageUrl: house02,
+      area: 4200,
+      description: "",
+      houseImages: [],
+      location: {
+        lat: 0,
+        lng: 0
+      },
+      ownerContact1: "",
+      ownerContact2: "",
+      ownerName: "",
+      saleDate: "",
+      saleTime: "",
+      seller_id: "",
+      selling_id: ""
     },
   ];
 

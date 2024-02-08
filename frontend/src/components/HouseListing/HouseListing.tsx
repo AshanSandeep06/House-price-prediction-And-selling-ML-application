@@ -18,6 +18,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { NavLink } from "react-router-dom";
 
 const HouseListing = (props: HouseListingDetails) => {
+  const houseImagesPath = "/img/uploads/houseImages/";
+
   return (
     <Paper
       elevation={3}
@@ -35,7 +37,7 @@ const HouseListing = (props: HouseListingDetails) => {
           component="img"
           height={200}
           className="img"
-          image={props.mainImageUrl}
+          image={houseImagesPath + props.houseImages[0]}
           alt={props.name}
         />
         <CardContent>

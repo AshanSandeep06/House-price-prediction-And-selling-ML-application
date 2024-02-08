@@ -97,12 +97,6 @@ const App = () => {
           path="/user/myListings/viewProperty"
           element={
             <ViewPropertyDetails
-              images={[
-                { url: houseImage1 },
-                { url: houseImage2 },
-                { url: houseImage3 },
-                { url: houseImage2 },
-              ]}
               name={"Beautiful House"}
               description={
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, unde delectus aspernatur veniam architecto ex labore itaque quo quod hic officiis eum laboriosam deleniti accusamus error quas modi, sequi illo."
@@ -111,11 +105,19 @@ const App = () => {
               price={50000}
               bedrooms={3}
               bathrooms={5}
-              area={"4200 sqft"}
-              mainImageUrl={houseImage2}
+              area={4200}
               ownerName="Kasun Bandara"
-              ownerContact="0779905692"
               saleDate="21-01-2024"
+              selling_id={""}
+              seller_id={""}
+              location={{
+                lat: 0,
+                lng: 0,
+              }}
+              houseImages={[houseImage1, houseImage2, houseImage3, houseImage2]}
+              ownerContact1={""}
+              ownerContact2={""}
+              saleTime={""}
             />
           }
         />

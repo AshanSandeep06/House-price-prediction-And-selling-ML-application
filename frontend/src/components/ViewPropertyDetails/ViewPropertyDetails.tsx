@@ -42,19 +42,19 @@ interface PropertyDetailsProps {
 
 const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
   const {
-    images,
     bedrooms,
     bathrooms,
     area,
     description,
     name,
-    mainImageUrl,
     location,
     address,
     price,
     ownerName,
-    ownerContact,
     saleDate,
+    houseImages,
+    ownerContact1,
+    ownerContact2
   } = property;
   const [openGallery, setOpenGallery] = useState(false);
 
@@ -93,7 +93,7 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
             <div className="relative property-image flex justify-center items-center mb-5">
               {/* Display the first image as a preview */}
               <img
-                src={mainImageUrl}
+                src={houseImages[0]}
                 alt={`${name} Preview`}
                 className="preview-image"
               />
@@ -149,7 +149,7 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
                   color="textSecondary"
                   paragraph
                 >
-                  {ownerContact}
+                  {ownerContact1}
                 </Typography>
               </p>
 
@@ -179,7 +179,7 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
                   color="textSecondary"
                   paragraph
                 >
-                  {area}
+                  {area} sqft
                 </Typography>
               </p>
 
@@ -260,7 +260,7 @@ const ViewPropertyDetails: React.FC<HouseListingDetails> = (property) => {
 
         {/* ----------------------------------------------------------------- */}
         <PropertyGallery
-          images={images}
+          images={houseImages}
           open={openGallery}
           handleClose={handleGalleryClose}
         />

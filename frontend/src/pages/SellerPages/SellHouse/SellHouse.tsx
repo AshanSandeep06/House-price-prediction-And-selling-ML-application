@@ -258,7 +258,7 @@ const SellHouse = () => {
     if (files && files.length > 0) {
       const formData = new FormData();
 
-      let i = 0;
+      let i = 1;
       Array.from(files).forEach((file, index) => {
         const houseImageName =
           sellingID +
@@ -271,6 +271,8 @@ const SellHouse = () => {
           files[index].name.split(".")[1];
         formData.append(`files`, file, houseImageName);
       });
+
+      console.log("FormData: ", formData)
 
       axios
         .put("/selling_house/saveHouseImages/" + sellingID+"/"+ "S00-001", formData, {
