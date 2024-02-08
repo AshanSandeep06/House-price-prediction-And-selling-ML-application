@@ -145,3 +145,35 @@ class seller_controller:
         except Exception as e:
             response = {"code": "02", "message": str(e), "content": None}
             return JSONResponse(status_code=500, content=response, media_type="application/json")
+        
+    # Generate New Seller ID
+    async def generate_new_seller_id(self):
+        try:
+            # Aggregate to get the last selling ID
+            pipeline = [{"$group": {"_id": None, "max_id": {"$max": "$seller_id"}}}]
+            result = await self.collection.aggregate(pipeline).to_list(None)
+
+            if result and result[0]['max_id']:
+                lastSellerID = result[0]['max_id']
+                firstString = lastSellerID.split('-')[0]
+                new_seller_id = 0
+                
+                secondNumber = int(lastSellerID.split('-')[1])
+                secondNumber = secondNumber + 1
+                if secondNumber < 10:
+                    new_seller_id = f"{firstString}-00{secondNumber}"
+                elif secondNumber < 100:
+                    new_seller_id = f"{firstString}-0{secondNumber}"
+                elif secondNumber < 1000:
+                    new_seller_id = f"{firstString}-{secondNumber}"
+
+                response = {"code": "00", "message": "New Seller ID has been generated successfully..!", "content": new_seller_id}
+                return JSONResponse(status_code=200, content=response, media_type="application/json")
+            else:
+                new_seller_id = "S00-001"
+                response = {"code": "00", "message": "First Seller ID has been generated successfully..!", "content": new_seller_id}
+                return JSONResponse(status_code=200, content=response, media_type="application/json")
+
+        except Exception as e:
+            response = {"code": "02", "message": str(e), "content": None}
+            return JSONResponse(status_code=500, content=response, media_type="application/json")

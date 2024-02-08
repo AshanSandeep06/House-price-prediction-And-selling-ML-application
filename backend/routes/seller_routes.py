@@ -19,6 +19,7 @@ class seller_routes:
         
     def config_routes(self):
         self.__router.add_api_route("/", self.__seller_controller.get_all_sellers, methods=["GET"])
+        self.__router.add_api_route("/generate_new_seller_ID", self.__seller_controller.generate_new_seller_id, methods=["GET"])
         self.__router.add_api_route("/", self.__seller_controller.create_seller, methods=["POST"])
         self.__router.add_api_route("/", self.__seller_controller.update_seller, methods=["PUT"])
         self.__router.add_api_route("/{seller_id}", self.__seller_controller.delete_seller, methods=["DELETE"])

@@ -4,6 +4,7 @@ import {
   useEffect,
   MutableRefObject,
   RefObject,
+  ChangeEvent,
 } from "react";
 import HeaderProps from "../../types/HeaderProps";
 import "./Header.css";
@@ -41,6 +42,9 @@ import Explore from "../Explore";
 import Footer from "../Footer";
 import logo from "../../assets/img/logo.png";
 import { useMyContext } from "../../config/ContextAPI";
+import axios from "../../axios";
+import { Signup } from "../../types/Signup";
+import Swal from "sweetalert2";
 
 const Header = (props: HeaderProps) => {
   type Anchor = "right";
@@ -63,6 +67,64 @@ const Header = (props: HeaderProps) => {
     console.log("exploreRef current value:", exploreRef.current);
     console.log("footerRef current value:", footerRef.current);
   }, [dashboardRef, exploreRef, footerRef]);
+
+  const [fullName, setFullName] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [contact1, setContact1] = useState<string>("");
+  const [contact2, setContact2] = useState<string>("");
+
+  const handleCancelSignup = () => {
+    setFullName("");
+    setAddress("");
+    setEmail("");
+    setUsername("");
+    setPassword("");
+    setContact1("");
+    setContact2("");
+  };
+
+  const handleSignup = () => {
+    let newSignup: Signup = {
+      seller_id: "",
+      username: username,
+      password: password,
+      seller_name: fullName,
+      seller_contact_01: contact1,
+      seller_contact_02: contact2,
+      seller_address: address,
+      seller_email: email,
+    };
+
+    axios
+      .post("/auth/signup/", newSignup, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        handleCancelSignup();
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+
+        handleCancelSignup();
+      });
+  };
 
   const [cartState, setCartState] = useState({
     right: false,
@@ -538,36 +600,84 @@ const Header = (props: HeaderProps) => {
                                   textFieldType: "text",
                                   name: "fullName",
                                   placeHolderText: "Full Name",
+                                  value: fullName,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setFullName(event.target.value);
+                                  },
                                 },
                                 {
                                   label: "Username",
                                   textFieldType: "text",
                                   name: "username",
                                   placeHolderText: "Username",
+                                  value: username,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setUsername(event.target.value);
+                                  },
                                 },
                                 {
                                   label: "Password",
                                   textFieldType: "password",
                                   name: "password",
                                   placeHolderText: "Password",
+                                  value: password,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setPassword(event.target.value);
+                                  },
                                 },
                                 {
                                   label: "Address",
                                   textFieldType: "text",
                                   name: "address",
                                   placeHolderText: "Address",
+                                  value: address,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setAddress(event.target.value);
+                                  },
                                 },
                                 {
-                                  label: "Contact Number",
+                                  label: "Contact Number 1",
                                   textFieldType: "text",
-                                  name: "contact",
-                                  placeHolderText: "Contact Number",
+                                  name: "contact1",
+                                  placeHolderText: "Contact Number 1",
+                                  value: contact1,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setContact1(event.target.value);
+                                  },
+                                },
+                                {
+                                  label: "Contact Number 2",
+                                  textFieldType: "text",
+                                  name: "contact2",
+                                  placeHolderText: "Contact Number 2",
+                                  value: contact2,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setContact2(event.target.value);
+                                  },
                                 },
                                 {
                                   label: "Email",
                                   textFieldType: "text",
                                   name: "email",
                                   placeHolderText: "Email",
+                                  value: email,
+                                  onChange: (
+                                    event: ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setEmail(event.target.value);
+                                  },
                                 },
                               ]}
                               buttonsArray={[
@@ -575,11 +685,13 @@ const Header = (props: HeaderProps) => {
                                   color: "success",
                                   icon: <PersonAddIcon />,
                                   text: "Register",
+                                  onClick: handleSignup,
                                 },
                                 {
                                   color: "error",
                                   icon: <BackspaceIcon />,
                                   text: "Cancel",
+                                  onClick: handleCancelSignup,
                                 },
                               ]}
                             />
