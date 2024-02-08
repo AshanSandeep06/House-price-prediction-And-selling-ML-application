@@ -88,7 +88,8 @@ const App = () => {
         <Route path="/explore" element={<HomePage />} />
         <Route path="/contact" element={<HomePage />} />
         <Route path="/user/home" element={<UserPage />} />
-        <Route path="/user/login" element={<UserPage />} />
+        <Route path="/user/logout" element={<HomePage />} />
+        {/* <Route path="/user/login" element={<UserPage />} /> */}
         <Route path="/user/my_listings" element={<UserPage />} />
         <Route path="/user/predict_house_price" element={<PricePrediction />} />
         <Route path="/user/sell_your_house" element={<SellHouse />} />

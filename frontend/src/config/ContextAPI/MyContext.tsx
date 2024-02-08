@@ -17,6 +17,8 @@ interface AllObjects {
   footerRef: RefObject<any>;
   useStateLocation: { lat: number; lng: number };
   setUseStateLocation: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
+  sellerId: string;
+  setSellerId: Dispatch<SetStateAction<string>>;
   // currentComponent: React.ReactNode;
   // setCurrentComponent: Dispatch<any>;
   // handleBtnLoginClick: () => void;
@@ -67,12 +69,16 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
     lng: 80.63690185546876,
   });
 
+  const [sellerId, setSellerId] = useState<string>("");
+
   const allData: AllObjects = {
     dashboardRef: homeRef,
     exploreRef: exploreRef,
     footerRef: contactRef,
     useStateLocation: useStateLocation,
     setUseStateLocation: setUseStateLocation,
+    sellerId: sellerId,
+    setSellerId: setSellerId
   };
 
   return <MyContext.Provider value={allData}>{children}</MyContext.Provider>;

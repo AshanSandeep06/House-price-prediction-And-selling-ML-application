@@ -17,4 +17,5 @@ export type HouseListingDetails = {
     ownerContact2: string;
     saleDate: string;
     saleTime: string;
+    viewPropertyDetails?: boolean
 };

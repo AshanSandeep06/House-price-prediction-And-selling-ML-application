@@ -9,7 +9,7 @@ const UserPage = () => {
   return (
     <>
       <Header
-        buttons={["logout", "my_profile"]}
+        buttons={["logout"]}
         links={["my_listings", "predict_house_price", "sell_your_house"]} prefix="/user/" />
       <SellerContent />
       <Footer />

@@ -16,7 +16,7 @@ class auth_routes:
         
     def config_routes(self):
         self.__router.add_api_route("/signup", self.__auth_controller.auth_signup, methods=["POST"])
-        self.__router.add_api_route("/login", self.__auth_controller.auth_login, methods=["GET"])
+        self.__router.add_api_route("/login", self.__auth_controller.auth_login, methods=["POST"])
         
     def get_router(self):
         return self.__router

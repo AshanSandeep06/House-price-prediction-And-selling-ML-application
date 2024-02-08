@@ -28,6 +28,8 @@ const HouseListing = (props: HouseListingDetails) => {
     navigate("/user/myListings/viewProperty", { state: { props } });
   };
 
+  const handleNoView = () => {};
+
   return (
     <Paper
       elevation={3}
@@ -45,7 +47,12 @@ const HouseListing = (props: HouseListingDetails) => {
           component="img"
           height={200}
           className="img"
-          image={houseImagesPath + props.houseImages[0]}
+          // image={houseImagesPath + props.houseImages[0]}
+          image={
+            props.houseImages.length > 1
+              ? houseImagesPath + props.houseImages[0]
+              : props.houseImages[0]
+          }
           alt={props.name}
         />
         <CardContent>
@@ -116,7 +123,11 @@ const HouseListing = (props: HouseListingDetails) => {
 
         <div className="flex justify-center mb-6 mt-2">
           <button
-            onClick={handleViewPropertyDetails}
+            onClick={
+              props.viewPropertyDetails
+                ? handleViewPropertyDetails
+                : handleNoView
+            }
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded !mt-0"
           >
             View Property

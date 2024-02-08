@@ -45,14 +45,16 @@ import { useMyContext } from "../../config/ContextAPI";
 import axios from "../../axios";
 import { Signup } from "../../types/Signup";
 import Swal from "sweetalert2";
+import { Login } from "../../types/Login";
 
 const Header = (props: HeaderProps) => {
   type Anchor = "right";
+  const navigate = useNavigate();
 
   const loginFormRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
 
-  const { dashboardRef, exploreRef, footerRef } = useMyContext();
+  const { dashboardRef, exploreRef, footerRef, sellerId, setSellerId } = useMyContext();
 
   const scrollToComponent = (ref: RefObject<any> | null) => {
     if (ref !== null) {
@@ -76,6 +78,9 @@ const Header = (props: HeaderProps) => {
   const [contact1, setContact1] = useState<string>("");
   const [contact2, setContact2] = useState<string>("");
 
+  const [loginUsername, setLoginUsername] = useState<string>("");
+  const [loginPassword, setLoginPassword] = useState<string>("");
+
   const handleCancelSignup = () => {
     setFullName("");
     setAddress("");
@@ -87,19 +92,73 @@ const Header = (props: HeaderProps) => {
   };
 
   const handleSignup = () => {
-    let newSignup: Signup = {
-      seller_id: "",
-      username: username,
-      password: password,
-      seller_name: fullName,
-      seller_contact_01: contact1,
-      seller_contact_02: contact2,
-      seller_address: address,
-      seller_email: email,
+    axios
+      .get("/seller/generate_new_seller_ID")
+      .then((res) => {
+        let newSignup: Signup = {
+          seller_id: res.data.content,
+          username: username,
+          password: password,
+          seller_name: fullName,
+          seller_contact_01: contact1,
+          seller_contact_02: contact2,
+          seller_address: address,
+          seller_email: email,
+        };
+
+        setSellerId(res.data.content)
+
+        axios
+          .post("/auth/signup", newSignup, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: res.data.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+
+            handleCancelSignup();
+          })
+          .catch((error) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.response.data.message,
+            });
+
+            // handleCancelSignup();
+          });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+
+        handleCancelSignup();
+      });
+  };
+
+  const handleCancelLogin = () => {
+    setLoginUsername("");
+    setLoginPassword("");
+  };
+
+  const handleLogin = () => {
+    let newLogin: Login = {
+      username: loginUsername,
+      password: loginPassword,
     };
 
     axios
-      .post("/auth/signup/", newSignup, {
+      .post("/auth/login", newLogin, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -112,8 +171,15 @@ const Header = (props: HeaderProps) => {
           showConfirmButton: false,
           timer: 1500,
         });
+        // localStorage.setItem(TOKEN_KEY, res.data.token);
+        // window.localStorage.setItem("userInfo", JSON.stringify(res.data))
+        // setSellerId(seller_id)
+        setSellerId(res.data.content)
 
-        handleCancelSignup();
+        navigate("/user/home");
+        console.log("Login User: ", res.data.content)
+
+        handleCancelLogin();
       })
       .catch((error) => {
         Swal.fire({
@@ -122,7 +188,7 @@ const Header = (props: HeaderProps) => {
           text: error.response.data.message,
         });
 
-        handleCancelSignup();
+        handleCancelLogin();
       });
   };
 
@@ -382,16 +448,31 @@ const Header = (props: HeaderProps) => {
                             name="username"
                             placeholder="Username"
                             required
+                            value={loginUsername}
+                            onChange={(
+                              event: ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setLoginUsername(event.target.value);
+
+                              if (event.target.value && loginPassword) {
+                              }
+                            }}
                           />
 
                           <TextField
                             label="Password"
                             className="!font-poppins"
-                            type="search"
+                            type="password"
                             variant="outlined"
                             name="password"
                             placeholder="Password"
                             required
+                            value={loginPassword}
+                            onChange={(
+                              event: ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setLoginPassword(event.target.value);
+                            }}
                           />
                         </div>
 
@@ -431,22 +512,13 @@ const Header = (props: HeaderProps) => {
                         </div>
 
                         <div className="my-5 flex justify-center items-center">
-                          <NavLink
-                            id="loginContainer"
-                            to={"/user/login"}
-                            style={{
-                              height: "max-content",
-                              borderRadius: "6px",
-                            }}
+                          <Button
+                            className="!px-[30px] !capitalize !font-poppins !font-normal !text-[16px] !bg-[#0d6efd]"
+                            variant="contained"
+                            onClick={handleLogin}
                           >
-                            <Button
-                              className="!px-[30px] !capitalize !font-poppins !font-normal !text-[16px] !bg-[#0d6efd]"
-                              variant="contained"
-                              // onClick={handleBtnLoginClick}
-                            >
-                              Login
-                            </Button>
-                          </NavLink>
+                            Login
+                          </Button>
                         </div>
 
                         <div className="flex justify-center items-center flex-wrap">

@@ -26,9 +26,11 @@ import { HouseListingDetails } from "../../../types/HouseListingDetails";
 import { NewHouseListing } from "../../../types/NewHouseListing";
 import { useMyContext } from "../../../config/ContextAPI";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const SellHouse = () => {
-  const { useStateLocation, setUseStateLocation } = useMyContext();
+  const { sellerId, useStateLocation, setUseStateLocation } = useMyContext();
+  const navigate = useNavigate();
 
   const [sellingID, setSellingID] = useState<string>("");
 
@@ -39,11 +41,11 @@ const SellHouse = () => {
     new Date().toLocaleTimeString("en-US", { hour12: false })
   );
 
-  const [sellerName, setSellerName] = useState<string>("Kasun Bandara");
-  const [sellerContact1, setSellerContact1] = useState<string>("0774589862");
-  const [sellerContact2, setSellerContact2] = useState<string>("0914585092");
-  const [sellerAddress, setSellerAddress] = useState<string>("Kandy");
-  const [sellerEmail, setSellerEmail] = useState<string>("kasun123@gmail.com");
+  const [sellerName, setSellerName] = useState<string>("");
+  const [sellerContact1, setSellerContact1] = useState<string>("");
+  const [sellerContact2, setSellerContact2] = useState<string>("");
+  const [sellerAddress, setSellerAddress] = useState<string>("");
+  const [sellerEmail, setSellerEmail] = useState<string>("");
 
   const [houseName, setHouseName] = useState<string>("");
   const [houseDescription, setHouseDescription] = useState<string>("");
@@ -79,12 +81,32 @@ const SellHouse = () => {
       setSellingTime(new Date().toLocaleTimeString("en-US", { hour12: false }));
     }, 1000);
 
+    if(!sellerId){
+      navigate("/");
+    }
+
     generate_new_selling_ID();
     get_address_from_coords();
+    fetchSellerDetails()
     // loadAllCustomers();
     // getAllItems();
     // loadAllItems();
   }, [useStateLocation]);
+
+  const fetchSellerDetails = () => {
+    const seller_id_param = sellerId ? sellerId : "Empty";
+    axios.get("/seller/get_by_seller_id/"+seller_id_param)
+    .then((res) => {
+      setSellerName(res.data.content.seller_name)
+      setSellerContact1(res.data.content.seller_contact_01)
+      setSellerContact2(res.data.content.seller_contact_02)
+      setSellerAddress(res.data.content.seller_address)
+      setSellerEmail(res.data.content.seller_email)
+    })
+    .catch((err) => {
+      console.log(err.response.data.message);
+    })
+  }
 
   const get_address_from_coords = () => {
     let dataPayload = {

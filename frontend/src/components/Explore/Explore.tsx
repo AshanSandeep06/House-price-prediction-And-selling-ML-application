@@ -36,7 +36,7 @@ const Explore = (props: any) => {
       landSize: 15,
       area: 4200,
       description: "",
-      houseImages: [],
+      houseImages: [house02],
       location: {
         lat: 0,
         lng: 0
@@ -60,7 +60,7 @@ const Explore = (props: any) => {
       landSize: 15,
       area: 4200,
       description: "",
-      houseImages: [],
+      houseImages: [house03],
       location: {
         lat: 0,
         lng: 0
@@ -84,7 +84,7 @@ const Explore = (props: any) => {
       landSize: 15,
       area: 4200,
       description: "",
-      houseImages: [],
+      houseImages: [house02],
       location: {
         lat: 0,
         lng: 0
@@ -108,7 +108,7 @@ const Explore = (props: any) => {
       landSize: 15,
       area: 4200,
       description: "",
-      houseImages: [],
+      houseImages: [house02],
       location: {
         lat: 0,
         lng: 0
@@ -132,7 +132,7 @@ const Explore = (props: any) => {
       landSize: 15,
       area: 4200,
       description: "",
-      houseImages: [],
+      houseImages: [house03],
       location: {
         lat: 0,
         lng: 0
@@ -157,7 +157,7 @@ const Explore = (props: any) => {
       landSize: 15,
       area: 4200,
       description: "",
-      houseImages: [],
+      houseImages: [house03],
       location: {
         lat: 0,
         lng: 0
@@ -181,7 +181,7 @@ const Explore = (props: any) => {
       area: 4200,
       landSize: 15,
       description: "",
-      houseImages: [],
+      houseImages: [house02],
       location: {
         lat: 0,
         lng: 0
@@ -205,7 +205,7 @@ const Explore = (props: any) => {
       area: 4200,
       landSize: 15,
       description: "",
-      houseImages: [],
+      houseImages: [house03],
       houseAge: 3,
       location: {
         lat: 0,
@@ -292,7 +292,7 @@ const Explore = (props: any) => {
       >
         {/* <Food items={data.items} /> */}
         {houseDummyData.map((house, index) => (
-          <HouseListing key={index} {...house} />
+    <HouseListing key={index} {...house} viewPropertyDetails={false} />
         ))}
       </div>
     </section>

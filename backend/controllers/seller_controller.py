@@ -100,7 +100,7 @@ class seller_controller:
                 return JSONResponse(status_code=200, content=response, media_type="application/json")
                 
             else:
-                response = {"code": "00", "message": f"There is no Seller with this ID - {seller_id}", "content": seller}
+                response = {"code": "00", "message": f"There is no Seller with this ID - {seller_id}", "content": None}
                 return JSONResponse(status_code=500, content=response, media_type="application/json")
         
         except Exception as e:
@@ -153,7 +153,8 @@ class seller_controller:
             pipeline = [{"$group": {"_id": None, "max_id": {"$max": "$seller_id"}}}]
             result = await self.collection.aggregate(pipeline).to_list(None)
 
-            if result and result[0]['max_id']:
+            # if result and len(result) > 0 and result[0].get('max_id'):
+            if len(result) > 0:
                 lastSellerID = result[0]['max_id']
                 firstString = lastSellerID.split('-')[0]
                 new_seller_id = 0
@@ -170,6 +171,7 @@ class seller_controller:
                 response = {"code": "00", "message": "New Seller ID has been generated successfully..!", "content": new_seller_id}
                 return JSONResponse(status_code=200, content=response, media_type="application/json")
             else:
+                # No documents found in the collection, initialize new_seller_id with a default value
                 new_seller_id = "S00-001"
                 response = {"code": "00", "message": "First Seller ID has been generated successfully..!", "content": new_seller_id}
                 return JSONResponse(status_code=200, content=response, media_type="application/json")
@@ -177,3 +179,4 @@ class seller_controller:
         except Exception as e:
             response = {"code": "02", "message": str(e), "content": None}
             return JSONResponse(status_code=500, content=response, media_type="application/json")
+

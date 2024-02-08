@@ -8,9 +8,16 @@ import house02 from "../../../assets/img/house-03.jpg";
 import house03 from "../../../assets/img/house-04.jpg";
 import "./MyListings.css";
 import axios from "../../../axios";
+import { useNavigate } from "react-router-dom";
 
 const MyListings = (props: any) => {
-  const { dashboardRef } = useMyContext();
+  const { sellerId, dashboardRef } = useMyContext();
+  const navigate = useNavigate();
+
+  const handleViewPropertyDetails = () => {
+    // Navigate to the ViewPropertyDetails component with props data
+    navigate("/user/myListings/viewProperty", { state: { props } });
+  };
 
   useEffect(() => {
     loadAllSellerHouseListings();
@@ -23,7 +30,7 @@ const MyListings = (props: any) => {
 
   const loadAllSellerHouseListings = () => {
     axios
-      .get("/selling_house/S00-001")
+      .get("/selling_house/" + sellerId)
       .then((res) => {
         console.log(res.data.content);
         setAllSellerHouseListingsData(res.data.content);
@@ -156,7 +163,7 @@ const MyListings = (props: any) => {
         >
           {/* <Food items={data.items} /> */}
           {allSellerHouseListingsData.map((house, index) => (
-            <HouseListing key={index} {...house} />
+            <HouseListing key={index} {...house} viewPropertyDetails={true} />
           ))}
         </div>
       </section>
