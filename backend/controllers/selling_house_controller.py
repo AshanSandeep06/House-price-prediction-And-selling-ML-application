@@ -85,8 +85,8 @@ class selling_house_controller:
                     # For demonstration purposes, let's assume we're saving the file to a local directory named 'uploads'
                     file_path = f"F:/IJSE 4th Sem AI_ML/ML My Final Project/House-price-prediction_house-selling-ml-application/frontend/public/img/uploads/houseImages/{filename}"
                     db_file_path = f"{filename}"
-                    with open(file_path, "wb") as f:
-                        f.write(content)
+                    # with open(file_path, "wb") as f:
+                    #     f.write(content)
                     house_data['houseImages'].append(db_file_path)
 
                  # Update houseImages field in the existing document

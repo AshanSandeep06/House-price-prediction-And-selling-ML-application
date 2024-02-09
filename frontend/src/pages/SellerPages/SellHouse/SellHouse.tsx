@@ -81,13 +81,13 @@ const SellHouse = () => {
       setSellingTime(new Date().toLocaleTimeString("en-US", { hour12: false }));
     }, 1000);
 
-    if(!sellerId){
+    if (!sellerId) {
       navigate("/");
     }
 
     generate_new_selling_ID();
     get_address_from_coords();
-    fetchSellerDetails()
+    fetchSellerDetails();
     // loadAllCustomers();
     // getAllItems();
     // loadAllItems();
@@ -95,18 +95,19 @@ const SellHouse = () => {
 
   const fetchSellerDetails = () => {
     const seller_id_param = sellerId ? sellerId : "Empty";
-    axios.get("/seller/get_by_seller_id/"+seller_id_param)
-    .then((res) => {
-      setSellerName(res.data.content.seller_name)
-      setSellerContact1(res.data.content.seller_contact_01)
-      setSellerContact2(res.data.content.seller_contact_02)
-      setSellerAddress(res.data.content.seller_address)
-      setSellerEmail(res.data.content.seller_email)
-    })
-    .catch((err) => {
-      console.log(err.response.data.message);
-    })
-  }
+    axios
+      .get("/seller/get_by_seller_id/" + seller_id_param)
+      .then((res) => {
+        setSellerName(res.data.content.seller_name);
+        setSellerContact1(res.data.content.seller_contact_01);
+        setSellerContact2(res.data.content.seller_contact_02);
+        setSellerAddress(res.data.content.seller_address);
+        setSellerEmail(res.data.content.seller_email);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
 
   const get_address_from_coords = () => {
     let dataPayload = {
@@ -278,12 +279,42 @@ const SellHouse = () => {
     setFiles(null);
   };
 
+  const readFile = (file: File): Promise<ArrayBuffer> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target && event.target.result) {
+          resolve(event.target.result as ArrayBuffer);
+        } else {
+          reject(new Error('Failed to read file'));
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(file);
+    });
+  };
+
+  const writeFile = (path: string, content: ArrayBuffer): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const blob = new Blob([content]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = path.substring(path.lastIndexOf('/') + 1);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      resolve();
+    });
+  };
+
   const uploadHouseImages = () => {
     if (files && files.length > 0) {
       const formData = new FormData();
 
       let i = 1;
-      Array.from(files).forEach((file, index) => {
+      Array.from(files).forEach(async (file, index) => {
         const houseImageName =
           sellingID +
           "_" +
@@ -296,11 +327,13 @@ const SellHouse = () => {
         formData.append(`files`, file, houseImageName);
       });
 
+      // ---------------------------------------------------------------
+
       console.log("FormData: ", formData);
 
       axios
         .put(
-          "/selling_house/saveHouseImages/" + sellingID + "/" + "S00-001",
+          "/selling_house/saveHouseImages/" + sellingID + "/" + sellerId,
           formData,
           {
             headers: {
